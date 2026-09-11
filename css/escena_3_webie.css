@@ -1,0 +1,206 @@
+/* ESCENA 3: WEBIE */
+#scene3 {
+    background:
+        linear-gradient(rgba(65, 69, 77, 0.78), rgba(16, 18, 24, 0.96)),
+        repeating-linear-gradient(90deg,
+            #656a71 0 2px,
+            #454950 2px 90px);
+}
+
+.fog {
+    position: absolute;
+    inset: -30%;
+    background:
+        radial-gradient(ellipse, rgba(223, 229, 230, 0.22), transparent 55%);
+    filter: blur(14px);
+    animation: fogMove 8s linear infinite alternate;
+}
+
+@keyframes fogMove {
+    to {
+        transform: translateX(20%) scale(1.15);
+    }
+}
+
+.rider {
+    position: absolute;
+    left: 50%;
+    bottom: 28%;
+    width: 280px;
+    height: 250px;
+    z-index: 2;
+    transform: translateX(120vw) rotate(-8deg);
+    transition: transform 1.25s cubic-bezier(.14, .76, .25, 1);
+}
+
+.rider.arrived {
+    transform: translateX(-50%) rotate(0);
+}
+
+/* .bike-wheel {
+    position: absolute;
+    bottom: 0;
+    width: 86px;
+    height: 86px;
+    border: 9px solid #11141a;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 3px #80868d;
+}
+
+.bike-wheel::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px dashed #8b9299;
+    border-radius: 50%;
+}
+
+.bike-wheel.one {
+    left: 19px;
+}
+
+.bike-wheel.two {
+    right: 15px;
+} */
+
+.bike-body {
+    /* position: absolute;
+    left: 70px;
+    bottom: 44px;
+    width: 150px;
+    height: 45px;
+    border-radius: 50% 15% 30% 20%;
+    background: linear-gradient(#2f3b45, #11161c);
+    transform: skewX(-15deg);
+    box-shadow: 0 8px 13px #000; */
+
+        position: absolute;
+
+            left: 69%;
+            transform: translateX(-50%);
+            top: 39%;
+            width: 24vw;
+            height: auto;
+            aspect-ratio: 667/438;
+
+            background: url("../media/img/moto.png") center / contain no-repeat;
+            background-size: 100%;
+}
+
+.webie-body {
+    position: absolute;
+
+    left: 50%;
+    transform: translateX(-50%);
+    top: -45%;
+    width: 20vw;
+    height: auto;
+    aspect-ratio: 1;
+
+    background: url("../media/webie/webie_1_body.png") center / contain no-repeat;
+    background-size: 100%;
+    /* background: linear-gradient(90deg, #252a34, #11141a); */
+    /* transform: rotate(-8deg); */
+}
+
+.webie-head {
+    position: absolute;
+
+    left: 50%;
+    transform: translateX(-50%);
+    top: -45%;
+    width: 20vw;
+    height: auto;
+    aspect-ratio: 1;
+
+    background: url("../media/webie/webie_1_head.png") center / contain no-repeat;
+    background-size: 100%;
+    animation: 0.4s;
+}
+
+.webie-head.tilt {
+    top: -44%;
+}
+
+/* .mask {
+    position: absolute;
+    inset: -3px;
+    display: grid;
+    place-items: center;
+    border-radius: 42%;
+    color: #1a1c20;
+    background: linear-gradient(120deg, #d2d7d7, #626a6d);
+    font-size: 40px;
+    transition: transform 700ms;
+    transform-origin: top center;
+}
+
+.mask.lifted {
+    transform: translateY(-70%) rotate(-22deg);
+}  */
+
+.dialogue {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    z-index: 5;
+    width: min(780px, 92%);
+    min-height: 125px;
+    padding: 21px 26px;
+    border: 1px solid rgba(210, 222, 231, 0.3);
+    border-radius: 8px;
+    background: rgba(8, 11, 17, 0.89);
+    box-shadow: 0 18px 50px #000;
+    transform: translateX(-50%);
+}
+
+.dialogue strong {
+    color: #b6d0cf;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+#dialogueText {
+    min-height: 48px;
+    color: #e8eaec;
+    line-height: 1.6;
+}
+
+#dialogueNext {
+    float: right;
+    padding: 7px 13px;
+    border: 0;
+    color: #d8e6e4;
+    background: transparent;
+    cursor: pointer;
+}
+
+.thrown-talisman {
+    position: absolute;
+    z-index: 10;
+    width: 85px;
+    height: 85px;
+    opacity: 0;
+    filter: drop-shadow(0 0 12px #b5ff97);
+    pointer-events: none;
+}
+
+.thrown-talisman.throw {
+    animation: throwTalisman 1.15s ease-in forwards;
+}
+
+@keyframes throwTalisman {
+    0% {
+        left: 50%;
+        top: 42%;
+        opacity: 1;
+        transform: scale(.3) rotate(0);
+    }
+
+    100% {
+        left: calc(100% - 115px);
+        top: calc(100% - 120px);
+        opacity: 1;
+        transform: scale(1) rotate(760deg);
+    }
+}

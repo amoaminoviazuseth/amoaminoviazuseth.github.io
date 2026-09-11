@@ -1,0 +1,18 @@
+/* TALISMÁN */
+.talisman-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.talisman-stone {
+    fill: #739f68;
+    stroke: #b1d99d;
+    stroke-width: 4;
+}
+
+.talisman-lines {
+    fill: none;
+    stroke: rgba(31, 68, 37, 0.7);
+    stroke-width: 2;
+}

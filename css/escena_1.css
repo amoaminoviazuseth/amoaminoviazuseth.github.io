@@ -1,0 +1,150 @@
+/* ESCENA 1 */
+#scene1 {
+    background:
+        linear-gradient(rgba(2, 2, 8, 0.8), rgba(2, 2, 8, 0.94)),
+        repeating-linear-gradient(90deg,
+            #272233 0 4px,
+            #17131f 4px 34px,
+            #31283d 34px 37px,
+            #17131f 37px 68px);
+    perspective: 900px;
+}
+*/
+
+
+.invitation {
+    position: absolute;
+    top: 12%;
+    width: min(90%, 650px);
+    margin: 0;
+    color: #f6e9d3;
+    text-align: center;
+    font-family: 'SlenderFont';
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 14px #000, 2px 2px #302141;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 1s, transform 1s;
+}
+
+.invitation.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: nervousText 2.8s infinite;
+}
+
+@keyframes nervousText {
+
+    0%,
+    100% {
+        translate: 0 0;
+    }
+
+    48% {
+        translate: 0.5px -0.5px;
+    }
+
+    50% {
+        translate: -0.5px 0.5px;
+    }
+}
+
+.scene1-light {
+    position: absolute;
+
+    width: clamp(320px, 46.8vw, 535px);
+    height: auto;
+    aspect-ratio: 768 / 1024;
+
+    bottom: 13%;
+    padding: 0;
+    border: 0;
+    transform: translateY(26.8%);
+    transition: 0.85s;
+
+    background: url("../media/img/door_glow.webp") no-repeat center;
+    background-size: contain;
+    pointer-events: none;
+
+    -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 100%);
+    mask-image: radial-gradient(ellipse at center, black 10%, transparent 100%);
+}
+
+.little-door {
+    position: absolute;
+    bottom: 13%;
+
+    width: clamp(90px, 13vw, 150px);
+    height: auto;
+    aspect-ratio: 213 / 360;
+
+    padding: 0;
+    border: 0;
+    background: url("../media/img/door_texture.jpg") no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    transition: 0.85s;
+    transform-origin: left;
+    transform-style: preserve-3d;
+
+    filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.65));
+}
+
+
+.little-door.open {
+    transform: rotateY(-116deg);
+}
+
+.door-hint {
+    position: absolute;
+    bottom: 5%;
+    color: #a99ab8;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 600ms;
+}
+
+.door-hint.visible {
+    opacity: 1;
+}
+
+.mouse-tracks {
+    position: absolute;
+    top: 67%;
+    left: -10%;
+    display: flex;
+    gap: 27px;
+    color: rgba(240, 225, 201, 0.6);
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mouse-tracks.walking {
+    animation: mouseRun 2.5s linear forwards;
+}
+
+.mouse-tracks span:nth-child(even) {
+    transform: translateY(10px) rotate(30deg);
+}
+
+@keyframes mouseRun {
+    0% {
+        left: -10%;
+        opacity: 0;
+    }
+
+    10%,
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 108%;
+        opacity: 0;
+    }
+}

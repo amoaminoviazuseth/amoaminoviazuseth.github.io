@@ -1,0 +1,49 @@
+/* PANTALLA DE SONIDO */
+#soundGate {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    text-align: center;
+    background:
+        radial-gradient(circle at 50% 45%, #251940, #07070d 62%);
+    transition: opacity 700ms, visibility 700ms;
+}
+
+#soundGate.closed {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.gate-card {
+    max-width: 520px;
+}
+
+.gate-symbol {
+    margin-bottom: 16px;
+    color: var(--gold);
+    font-size: 58px;
+    filter: drop-shadow(0 0 18px rgba(255, 216, 120, 0.45));
+    animation: gateFloat 2.4s ease-in-out infinite;
+}
+
+.gate-card h1 {
+    margin: 0 0 10px;
+    font-size: clamp(30px, 7vw, 60px);
+    font-weight: 400;
+}
+
+.gate-card p {
+    margin: 0 0 28px;
+    color: #c8bfd8;
+    line-height: 1.7;
+}
+
+@keyframes gateFloat {
+    50% {
+        transform: translateY(-8px);
+    }
+}
