@@ -7,8 +7,10 @@
     place-items: center;
     padding: 24px;
     text-align: center;
-    background:
-        radial-gradient(circle at 50% 45%, #251940, #07070d 62%);
+    background: url('../media/img/firstbackground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     transition: opacity 700ms, visibility 700ms;
 }
 

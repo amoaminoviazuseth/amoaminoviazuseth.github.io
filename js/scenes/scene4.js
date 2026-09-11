@@ -23,6 +23,9 @@ export function positionTalisman(x, y) {
     elements.dragTalisman.style.left = `${lensX}px`;
     elements.dragTalisman.style.top = `${lensY}px`;
 
+    elements.room.style.setProperty('--lens-x', `${lensX}px`);
+    elements.room.style.setProperty('--lens-y', `${lensY}px`);
+    
     revealNearbyButtons();
 }
 

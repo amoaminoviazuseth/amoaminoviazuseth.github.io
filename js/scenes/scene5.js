@@ -1,53 +1,37 @@
 import { elements } from '../dom.js';
-import { noise, tone, startMusicBox, stopMusicBox } from '../audio.js';
-import { CONFIG } from '../config.js';
+import {
+    noise,
+    tone,
+    startMusicBox,
+    stopMusicBox
+} from '../audio.js';
+
+let wishWasMade = false;
 
 export function createFinalGarden() {
     const fireflyContainer = elements.fireflyContainer;
-    const flowerBed = elements.flowerBed;
+
+    if (!fireflyContainer) {
+        console.warn(
+            "No se encontró el contenedor #fireflies."
+        );
+        return;
+    }
 
     fireflyContainer.innerHTML = "";
-    flowerBed.innerHTML = "";
 
     for (let index = 0; index < 38; index += 1) {
         const light = document.createElement("span");
 
         light.className = "magic-light";
         light.style.left = `${Math.random() * 100}%`;
-        light.style.top = `${Math.random() * 84}%`;
-        light.style.animationDelay = `${Math.random() * 4}s`;
-        light.style.animationDuration = `${3 + Math.random() * 4}s`;
+        light.style.top = `${8 + Math.random() * 76}%`;
+        light.style.animationDelay =
+            `${Math.random() * 4}s`;
+        light.style.animationDuration =
+            `${3 + Math.random() * 4}s`;
 
         fireflyContainer.appendChild(light);
-    }
-
-    const colors = [
-        "#ff85b5",
-        "#d9a3ff",
-        "#fff08e",
-        "#81dcff",
-        "#ffae7a"
-    ];
-
-    for (let index = 0; index < 30; index += 1) {
-        const flower = document.createElement("span");
-
-        flower.className = "flower";
-        flower.style.left = `${2 + Math.random() * 96}%`;
-        flower.style.setProperty(
-            "--height",
-            `${55 + Math.random() * 130}px`
-        );
-        flower.style.setProperty(
-            "--delay",
-            `${Math.random() * 1.2}s`
-        );
-        flower.style.setProperty(
-            "--color",
-            colors[Math.floor(Math.random() * colors.length)]
-        );
-
-        flowerBed.appendChild(flower);
     }
 }
 
@@ -56,15 +40,20 @@ export function startMusicBoxScene5() {
 }
 
 function createStarExplosion() {
+    if (!elements.starDust) return;
+
     elements.starDust.innerHTML = "";
 
     for (let index = 0; index < 85; index += 1) {
         const star = document.createElement("span");
+
         const angle = Math.random() * Math.PI * 2;
-        const distance = 100 + Math.random() * window.innerWidth * 0.6;
+        const distance =
+            100 + Math.random() * window.innerWidth * 0.6;
 
         star.className = "star";
-        star.textContent = Math.random() > 0.45 ? "✦" : "·";
+        star.textContent =
+            Math.random() > 0.45 ? "✦" : "·";
 
         star.style.setProperty(
             "--x",
@@ -86,19 +75,29 @@ function createStarExplosion() {
             `${8 + Math.random() * 23}px`
         );
 
-        star.style.animationDelay = `${Math.random() * 0.28}s`;
+        star.style.animationDelay =
+            `${Math.random() * 0.28}s`;
 
         elements.starDust.appendChild(star);
     }
 }
 
 export function setupScene5() {
-    elements.wishButton.addEventListener("click", () => {
-        if (elements.candles.classList.contains("out")) return;
+    if (!elements.wishButton) {
+        console.warn(
+            "No se encontró el botón #wishButton."
+        );
+        return;
+    }
 
-        elements.candles.classList.add("out");
+    elements.wishButton.addEventListener("click", () => {
+        if (wishWasMade) return;
+
+        wishWasMade = true;
+
         elements.wishButton.disabled = true;
-        elements.wishButton.textContent = "Tu deseo está a salvo ♡";
+        elements.wishButton.textContent =
+            "Tu deseo está a salvo ♡";
 
         noise(0.35, 0.045, 850);
         tone(784, 0.5, "sine", 0.05);
@@ -106,13 +105,21 @@ export function setupScene5() {
 
         createStarExplosion();
 
-        setTimeout(() => {
+        window.setTimeout(() => {
+            if (!elements.letterModal) return;
+
             elements.letterModal.classList.add("visible");
+            elements.letterModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
         }, 1300);
     });
 
-    elements.replay.addEventListener("click", () => {
-        stopMusicBox();
-        window.location.reload();
-    });
+    if (elements.replay) {
+        elements.replay.addEventListener("click", () => {
+            stopMusicBox();
+            window.location.reload();
+        });
+    }
 }

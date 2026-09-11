@@ -1,7 +1,7 @@
 /* ESCENA 4: SALA Y MINIJUEGO */
 #scene4 {
     display: block;
-    background: #111620;
+    background: url(../media/img/background.png) center / cover no-repeat;
 }
 
 .game-hud {
@@ -50,12 +50,7 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
-    background:
-        linear-gradient(rgba(28, 36, 49, 0.48), rgba(4, 8, 13, 0.72)),
-        repeating-linear-gradient(90deg,
-            #28313d 0 3px,
-            #1b222d 3px 76px);
-    filter: grayscale(0.35) saturate(0.65);
+    background: url("../media/img/background.png") center / cover no-repeat;
 }
 
 .room-floor {
@@ -223,31 +218,52 @@
     }
 }
 
+.buttons-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 21;
+    pointer-events: none;
+
+    -webkit-mask-image: radial-gradient(circle at var(--lens-x, -999px) var(--lens-y, -999px), black 90px, transparent 90px);
+    mask-image: radial-gradient(circle at var(--lens-x, -999px) var(--lens-y, -999px), black 90px, transparent 90px);
+}
+
 .hidden-button {
+    position: absolute;
+    width: clamp(40px, 5vw, 60px);
+    aspect-ratio: 1;
+    padding: 0;
+    border-radius: 50%;
+    opacity: 0.025;
+    cursor: default;
+    pointer-events: auto;
+}
+
+/* .hidden-button {
     position: absolute;
     z-index: 12;
     width: clamp(40px, 5vw, 60px);
     aspect-ratio: 1;
     padding: 0;
-    border: 3px solid #050508;
-    border-radius: 50%;
+    /* border: 3px solid #050508; */
+    /*border-radius: 50%;
     opacity: 0.025;
-    background:
+    /* background:
         radial-gradient(circle at 32% 27%, #5e6370, #050508 48%, #000);
     box-shadow:
         inset 0 0 0 5px #121217,
-        0 0 22px transparent;
-    cursor: default;
+        0 0 22px transparent; */
+    /*cursor: default;
     transition: opacity 180ms, filter 180ms, transform 180ms;
-}
+} */
 
 .hidden-button span {
     position: absolute;
     width: 15%;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: #020204;
-    box-shadow: inset 0 1px 2px #4a4a4f;
+    /* background: #020204; */
+    /* box-shadow: inset 0 1px 2px #4a4a4f; */
 }
 
 .hidden-button span:nth-child(1) {
@@ -277,13 +293,25 @@
     top: 73%;
     width: 2px;
     height: 42px;
-    background: #09090c;
+    /* background: #09090c; */
     transform: rotate(12deg);
+}
+
+.hidden-button.soul0 {
+    background: url("../media/souls/soul0.png") center / cover no-repeat;
+}
+
+.hidden-button.soul1 {
+    background: url("../media/souls/soul1.png") center / cover no-repeat;
+}
+
+.hidden-button.soul2 {
+    background: url("../media/souls/soul2.png") center / cover no-repeat;
 }
 
 .hidden-button.revealed {
     opacity: 1;
-    filter: brightness(1.9) drop-shadow(0 0 13px white);
+    /* filter: brightness(1.9) drop-shadow(0 0 13px white); */
     transform: scale(1.08);
     cursor: pointer;
 }
@@ -344,7 +372,7 @@
     height: 72px;
     padding: 0;
     border: 0;
-    background: transparent;
+    background-color: transparent;
     filter: drop-shadow(0 0 10px #b6f794);
     transform: translate(-50%, -50%);
     cursor: grab;
@@ -357,69 +385,18 @@
 
 .hand-enemy {
     position: absolute;
-    right: -2%;
+    right: 5%;
     top: 21%;
     z-index: 18;
-    width: min(470px, 48vw);
-    height: 55%;
+    width: min(517px, 58vw);
+    height: auto;
+    aspect-ratio: 666 / 375;
+    background: url("../media/souls/hand.png") center / contain no-repeat;
     pointer-events: none;
     filter: drop-shadow(-16px 18px 12px #000);
     transform:
         translateX(calc(108% - var(--danger) * 0.96%)) rotate(-9deg);
     transition: transform 800ms cubic-bezier(.2, .75, .2, 1);
-}
-
-.metal-palm {
-    position: absolute;
-    right: 0;
-    top: 32%;
-    width: 44%;
-    height: 35%;
-    border: 5px solid #281d1b;
-    border-radius: 50% 20% 42% 20%;
-    background:
-        repeating-linear-gradient(30deg,
-            transparent 0 10px,
-            rgba(255, 255, 255, .06) 11px 12px),
-        linear-gradient(120deg, #6d6058, #211b1b 70%);
-    box-shadow: inset 0 0 25px #100b0b;
-}
-
-.needle {
-    position: absolute;
-    right: 32%;
-    width: 58%;
-    height: 8%;
-    border: 3px solid #281c1a;
-    border-radius: 100% 5px 5px 100%;
-    background: linear-gradient(#92877f, #302625 50%, #756961);
-    clip-path: polygon(0 50%, 100% 0, 100% 100%);
-    transform-origin: right center;
-}
-
-.needle:nth-child(2) {
-    top: 19%;
-    rotate: 30deg;
-}
-
-.needle:nth-child(3) {
-    top: 31%;
-    rotate: 14deg;
-}
-
-.needle:nth-child(4) {
-    top: 43%;
-    rotate: 1deg;
-}
-
-.needle:nth-child(5) {
-    top: 55%;
-    rotate: -14deg;
-}
-
-.needle:nth-child(6) {
-    top: 67%;
-    rotate: -28deg;
 }
 
 .game-tip {

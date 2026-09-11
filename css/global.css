@@ -12,12 +12,29 @@
     box-sizing: border-box;
 }
 
+/* 1. Definir la fuente OMORI */
 @font-face {
-    font-family: 'SlenderFont';
-    src: url('../media/font/OMORI_GAME.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'omori';
+  src: url('../media/font/omori2.ttf') format('truetype'); 
+  
+  /* Corregido a truetype */
+}
+
+/* 2. Definir la fuente VCR */
+@font-face {
+  font-family: 'VCR';
+  src: url('../media/font/vcr.ttf') format('truetype'); /* Movido aquí dentro */
+}
+
+/* 3. Aplicar las fuentes a los elementos */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'VCR', sans-serif;
+}
+
+body, p {
+  font-family: 'omori', sans-serif;
+  font-size: 30px;   /* Aumenta el tamaño global del texto normal */
+  line-height: 1.4;  /* Da un poco de espacio entre líneas para que sea legible */
 }
 
 
@@ -29,7 +46,7 @@ body {
     overflow: hidden;
     background: #05050a;
     color: white;
-    font-family: 'SlenderFont', Georgia, "Times New Roman", serif;
+    font-family: 'VCR', Georgia, "Times New Roman", serif;
 }
 
 button {
@@ -42,7 +59,7 @@ button {
 #scene1 *,
 #scene2,
 #scene2 * {
-    font-family: 'SlenderFont', Georgia, "Times New Roman", serif;
+    font-family: 'VCR', Georgia, "Times New Roman", serif;
 }
 
 .scene {
@@ -84,12 +101,11 @@ button {
     z-index: 5;
     min-width: 180px;
     padding: 14px 24px;
-    border: 1px solid rgba(255, 235, 172, 0.65);
-    border-radius: 999px;
-    color: #2b193e;
-    background: linear-gradient(#fff5c8, #eabf70);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    color: #fff;
+    background: #000;
     box-shadow:
-        0 8px 30px rgba(255, 197, 84, 0.25),
+        0 8px 30px rgba(255, 255, 255, 0.9),
         inset 0 1px rgba(255, 255, 255, 0.9);
     cursor: pointer;
     transition: transform 180ms, box-shadow 180ms;
@@ -97,5 +113,5 @@ button {
 
 .primary-button:hover {
     transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 12px 35px rgba(255, 197, 84, 0.42);
+    box-shadow: 0 12px 35px #ac1000;
 }

@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080611">
 
-    <link rel="stylesheet" href="./css/global.css"/>
-    <link rel="stylesheet" href="./css/pantalla_de_sonido.css"/>
-    <link rel="stylesheet" href="./css/escena_1.css"/>
-    <link rel="stylesheet" href="./css/escena_2_t_nel.css"/>
-    <link rel="stylesheet" href="./css/escena_3_webie.css"/>
-    <link rel="stylesheet" href="./css/talism_n.css"/>
-    <link rel="stylesheet" href="./css/escena_4_sala_y_minijuego.css"/>
-    <link rel="stylesheet" href="./css/escena_5_final.css"/>
+  <link rel="stylesheet" href="./css/global.css" />
+  <link rel="stylesheet" href="./css/pantalla_de_sonido.css" />
+  <link rel="stylesheet" href="./css/escena_1.css" />
+  <link rel="stylesheet" href="./css/escena_2_t_nel.css" />
+  <link rel="stylesheet" href="./css/escena_3_webie.css" />
+  <link rel="stylesheet" href="./css/talism_n.css" />
+  <link rel="stylesheet" href="./css/escena_4_sala_y_minijuego.css" />
+  <link rel="stylesheet" href="./css/escena_5_final.css" />
 
   <title>Una puerta para ti</title>
-  <link rel="preload" href="./media/img/tunnel_last_anim.webp" as="image">
+  <link rel="preload" href="./media/img/tunnel_last_anim.webp" as="image" type="image/webp">
 
 </head>
 
@@ -47,7 +45,7 @@
     </h2>
 
     <div id="mouseTracks" class="mouse-tracks" aria-hidden="true">
-      <!-- 
+      <!--
       <span>•</span><span>•</span><span>•</span><span>•</span>
       <span>•</span><span>•</span><span>•</span><span>•</span>
       <span>•</span><span>•</span><span>•</span><span>•</span>
@@ -56,12 +54,12 @@
 
 
     <button id="littleDoor" class="little-door" aria-label="Abrir la pequeña puerta">
-      <!-- 
+      <!--
       <span class="door-frame"></span>
       <span class="door-panel">
         <span class="door-detail"></span>
         <span class="knob"></span>
-      </span> 
+      </span>
       -->
     </button>
 
@@ -69,7 +67,8 @@
   </section>
 
   <!-- ESCENA 2 -->
-    <audio id="audioSusurros" src="./media/sounds/WhispersSusurros.mp3" loop style="display: none;"></audio>  <section id="scene2" class="scene" aria-label="Túnel">
+  <audio id="audioSusurros" src="./media/sounds/WhispersSusurros.mp3" loop style="display: none;"></audio>
+  <section id="scene2" class="scene" aria-label="Túnel">
 
     <div class="tunnel"></div>
     <div class="tunnel-instruction">
@@ -88,89 +87,68 @@
   </section>
 
   <!-- ESCENA 3 -->
+  <!-- ESCENA 3 -->
   <section id="scene3" class="scene">
-    <div class="fog"></div>
 
-    <div id="rider" class="rider">
-      <div class="bike-wheel one"></div>
-      <div class="bike-wheel two"></div>
-      <div class="bike-body"></div>
-      <div class="webie-body"></div>
-      <div class="webie-head">
-        <!-- <div id="mask" class="mask">☠</div> -->
-        <div id="mask" class="mask"></div>
+    <!-- Lienzo con la misma proporción que las imágenes -->
+    <div class="scene3-stage">
+
+      <!-- Fondo completo -->
+      <img class="scene3-background" src="./media/webie/wybiebackground.png" alt="" draggable="false">
+
+      <div class="fog"></div>
+
+      <!-- Capas transparentes de Webie -->
+      <div id="rider" class="rider">
+        <div class="webie-container">
+
+          <!-- Webie estático con la boca cerrada -->
+          <div class="webie-idle"></div>
+
+          <!-- Webie que aparece mientras habla -->
+          <div class="webie-body"></div>
+
+          <div class="webie-head">
+            <div id="mask" class="mask"></div>
+          </div>
+
+        </div>
       </div>
     </div>
 
+    <!-- Interfaz sobre el lienzo -->
     <div class="dialogue">
       <strong>Webie</strong>
       <div id="dialogueText"></div>
       <button id="dialogueNext">Continuar ▸</button>
     </div>
 
-    <div id="thrownTalisman" class="thrown-talisman">
-      <svg class="talisman-svg" viewBox="0 0 100 100">
-        <path
-          class="talisman-stone"
-          fill-rule="evenodd"
-          d="M50 7 L94 86 Q96 92 88 91 L12 91 Q4 92 8 84 Z
-             M50 37 A14 14 0 1 0 50 65 A14 14 0 1 0 50 37"
-        />
-        <path class="talisman-lines" d="M20 79 Q39 57 50 19 M81 79 Q63 58 50 19"/>
-      </svg>
-    </div>
+    <div id="thrownTalisman" class="thrown-talisman talisman-img"></div>
+
   </section>
 
   <!-- ESCENA 4 -->
   <section id="scene4" class="scene">
     <div class="room">
-      <div class="room-floor"></div>
+      <div class="buttons-layer">
+        <button id="buttonPainting" class="hidden-button soul0" aria-label="Botón oculto">
+          <span></span><span></span><span></span><span></span>
+        </button>
 
-      <div class="painting"></div>
+        <button id="buttonSofa" class="hidden-button soul1" aria-label="Botón oculto">
+          <span></span><span></span><span></span><span></span>
+        </button>
 
-      <div class="sofa">
-        <div class="sofa-seat"></div>
+        <button id="buttonClock" class="hidden-button soul2" aria-label="Botón oculto">
+          <span></span><span></span><span></span><span></span>
+        </button>
       </div>
-
-      <div class="clock">
-        <div class="clock-face"></div>
-        <div class="pendulum"></div>
-      </div>
-
-      <button id="buttonPainting" class="hidden-button" aria-label="Botón oculto">
-        <span></span><span></span><span></span><span></span>
-      </button>
-
-      <button id="buttonSofa" class="hidden-button" aria-label="Botón oculto">
-        <span></span><span></span><span></span><span></span>
-      </button>
-
-      <button id="buttonClock" class="hidden-button" aria-label="Botón oculto">
-        <span></span><span></span><span></span><span></span>
-      </button>
 
       <div id="lens" class="lens"></div>
 
-      <button id="dragTalisman" class="drag-talisman" aria-label="Arrastrar talismán">
-        <svg class="talisman-svg" viewBox="0 0 100 100">
-          <path
-            class="talisman-stone"
-            fill-rule="evenodd"
-            d="M50 7 L94 86 Q96 92 88 91 L12 91 Q4 92 8 84 Z
-               M50 37 A14 14 0 1 0 50 65 A14 14 0 1 0 50 37"
-          />
-          <path class="talisman-lines" d="M20 79 Q39 57 50 19 M81 79 Q63 58 50 19"/>
-        </svg>
-      </button>
+      <button id="dragTalisman" class="drag-talisman talisman-img" aria-label="Arrastrar talismán"></button>
 
-      <div id="enemyHand" class="hand-enemy">
-        <div class="metal-palm"></div>
-        <div class="needle"></div>
-        <div class="needle"></div>
-        <div class="needle"></div>
-        <div class="needle"></div>
-        <div class="needle"></div>
-      </div>
+      <div id="enemyHand" class="hand-enemy"></div>
     </div>
 
     <div class="game-hud">
@@ -189,7 +167,7 @@
 
     <div id="gameOver" class="game-over hidden">
       <div class="game-over-card">
-        <h2>Te encontro</h2>
+        <h2>Te encontró</h2>
         <p>La casa cerro sus puertas. Pero todavia puedes intentarlo otra vez.</p>
         <button id="retryGame" class="primary-button">Volver a intentarlo</button>
       </div>
@@ -199,70 +177,71 @@
   <!-- ESCENA 5 -->
   <section id="scene5" class="scene">
     <div class="warm-room"></div>
-    <div id="fireflies"></div>
-    <div id="flowerBed" class="flower-bed"></div>
+
+    <div id="fireflies" class="fireflies" aria-hidden="true"></div>
 
     <div class="final-content">
-      <h1 class="final-title">La casa estaba guardando algo para ti…</h1>
-
-      <div class="cake">
-        <div class="candles" id="candles">
-          <div class="candle"><span class="flame"></span></div>
-          <div class="candle"><span class="flame"></span></div>
-          <div class="candle"><span class="flame"></span></div>
-          <div class="candle"><span class="flame"></span></div>
-          <div class="candle"><span class="flame"></span></div>
-        </div>
-
-        <div class="cake-top"></div>
-        <div class="cake-body"></div>
-
-        <div class="cake-writing">
-          Feliz cumpleaños,<br>
-          <span data-girlfriend-name>Mi amor</span>
-        </div>
-      </div>
+      <h1 class="final-title">
+        La casa estaba guardando algo para ti…
+      </h1>
 
       <button id="wishButton" class="primary-button">
         Pedir un deseo
       </button>
     </div>
 
-    <div id="starDust" class="star-dust"></div>
+    <div id="starDust" class="star-dust" aria-hidden="true"></div>
 
-    <div id="letterModal" class="letter-modal">
-      <div class="letter-layout">
-        <article class="letter-paper">
-          <h2>
-            Para <span data-girlfriend-name>mi amor</span>:
-          </h2>
+    <div id="letterModal" class="letter-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="letter-scroll">
+        <div class="letter-layout">
 
-          <div id="letterText"></div>
+          <!-- Carta -->
+          <article class="letter-paper">
+            <h2>
+              Para <span data-girlfriend-name>mi amor</span>:
+            </h2>
 
-          <p id="signature" class="signature"></p>
+            <div id="letterText"></div>
 
-          <button id="replay" class="replay">
-            Volver a vivir la aventura
-          </button>
-        </article>
+            <p id="signature" class="signature"></p>
 
-        <div class="polaroids">
-          <div class="polaroid">
-            <div id="photoOne" class="polaroid-image">♡</div>
-            <p>Nosotros dos juntos</p>
-          </div>
+            <button id="replay" class="replay">
+              Volver a vivir la aventura
+            </button>
+          </article>
 
-          <div class="polaroid">
-            <div id="photoTwo" class="polaroid-image">♡</div>
-            <p>Comiendo sushi</p>
-          </div>
+          <!-- Nuestras fotos -->
+          <aside class="polaroids" aria-label="Nuestras fotos">
+
+            <figure class="polaroid polaroid-one">
+              <div id="photoOne" class="polaroid-image">
+                <img src="./media/zusethyyo/juntos.jpg" alt="Nosotros dos juntos" draggable="false">
+              </div>
+
+              <figcaption>Nosotros dos juntos ♡</figcaption>
+            </figure>
+
+            <figure class="polaroid polaroid-two">
+              <div id="photoTwo" class="polaroid-image">
+                <img src="./media/zusethyyo/adiccion.jpg" alt="Comiendo sushi" draggable="false">
+              </div>
+
+              <figcaption>Comiendo sushi ♡</figcaption>
+            </figure>
+
+          </aside>
         </div>
+
+        <p class="scroll-hint">
+          Desliza para seguir leyendo ↓
+        </p>
       </div>
     </div>
-  </section>
 
-  <div id="whiteFlash" class="white-flash"></div>
-  <div class="screen-vignette"></div>
-  <script type="module" src="./js/main.js"></script>
-</body >
+    <div id="whiteFlash" class="white-flash"></div>
+    <div class="screen-vignette"></div>
+    <script type="module" src="./js/main.js"></script>
+</body>
+
 </html>

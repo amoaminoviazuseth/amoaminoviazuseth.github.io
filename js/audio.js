@@ -3,6 +3,142 @@ import { CONFIG } from './config.js';
 let audioContext;
 let musicTimer;
 
+/*
+ * Voz electrónica inspirada en código Morse.
+ *
+ * La función devuelve otra función que permite detener
+ * inmediatamente todos los sonidos y temporizadores.
+ */
+export function startMorseVoice(text) {
+    if (!audioContext || !text) {
+        return () => {};
+    }
+
+    const normalizedText = text
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase();
+
+    /*
+     * Generamos un patrón estable a partir del texto.
+     * Cada carácter produce un punto o una raya.
+     * Por eso los textos más largos generan voces más largas.
+     */
+    const pattern = Array.from(normalizedText)
+        .filter((character) => character.trim() !== "")
+        .map((character) => {
+            const characterCode = character.charCodeAt(0);
+            return characterCode % 3 === 0 ? "-" : ".";
+        });
+
+    if (pattern.length === 0) {
+        return () => {};
+    }
+
+    let stopped = false;
+    let patternIndex = 0;
+    let timerId = null;
+
+    const activeOscillators = new Set();
+
+    function playPulse(symbol) {
+        if (stopped || !audioContext) return;
+
+        const now = audioContext.currentTime;
+
+        /* Punto corto, raya más larga */
+        const duration = symbol === "-" ? 0.13 : 0.055;
+
+        /*
+         * Pequeñas variaciones de frecuencia para evitar
+         * que todos los sonidos sean idénticos.
+         */
+        const frequencies = [480, 540, 620, 700];
+        const frequency =
+            frequencies[patternIndex % frequencies.length];
+
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.type = "square";
+        oscillator.frequency.setValueAtTime(frequency, now);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(
+            0.035,
+            now + 0.008
+        );
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            now + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        activeOscillators.add(oscillator);
+
+        oscillator.addEventListener("ended", () => {
+            activeOscillators.delete(oscillator);
+            oscillator.disconnect();
+            gain.disconnect();
+        });
+
+        oscillator.start(now);
+        oscillator.stop(now + duration + 0.02);
+    }
+
+    function playNextPulse() {
+        if (stopped) return;
+
+        const symbol = pattern[patternIndex % pattern.length];
+
+        playPulse(symbol);
+
+        patternIndex += 1;
+
+        /*
+         * Las rayas dejan un espacio ligeramente mayor.
+         */
+        const nextDelay = symbol === "-" ? 175 : 95;
+
+        timerId = window.setTimeout(
+            playNextPulse,
+            nextDelay
+        );
+    }
+
+    playNextPulse();
+
+    /*
+     * Esta función se ejecutará cuando termine el texto.
+     */
+    return function stopMorseVoice() {
+        if (stopped) return;
+
+        stopped = true;
+
+        if (timerId !== null) {
+            window.clearTimeout(timerId);
+            timerId = null;
+        }
+
+        /*
+         * Detenemos incluso el tono que se encuentra
+         * reproduciéndose en ese preciso momento.
+         */
+        activeOscillators.forEach((oscillator) => {
+            try {
+                oscillator.stop();
+            } catch {
+                /* El oscilador posiblemente ya terminó. */
+            }
+        });
+
+        activeOscillators.clear();
+    };
+}
+
 export function initializeAudio() {
     if (!audioContext) {
         audioContext = new (

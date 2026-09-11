@@ -29,37 +29,45 @@
 
 .tunnel-instruction {
     position: absolute;
-    top: 10%;
+    top: 6%;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 4;
+    width: 100%;
     max-width: 90%;
     text-align: center;
     text-shadow: 0 3px 10px #000;
-
     opacity: 0;
     transition: 0.75s;
+    pointer-events: none;
 }
 
-.tunnel-instruction h2 {
-    margin: 0 0 8px;
-    font-size: clamp(25px, 5vw, 45px);
-    font-weight: 400;
-}
-
-.tunnel-instruction p {
-    margin: 0;
-    color: #c8bed9;
-}
-
+/* Regla requerida para mostrar el texto cuando JavaScript activa la clase */
 .tunnel-instruction.visible {
     opacity: 1;
 }
 
+.tunnel-instruction h2 {
+    margin: 0 0 6px;
+    font-size: clamp(22px, 4vw, 42px);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.tunnel-instruction p {
+    margin: 0;
+    font-size: clamp(14px, 2vw, 18px);
+    color: #c8bed9;
+}
+
 .progress-track {
     position: absolute;
-    top: 23%;
+    top: 21%; /* Mantiene un margen libre respecto al texto */
+    left: 50%;
+    transform: translateX(-50%); /* Centra la barra horizontalmente */
     z-index: 4;
     width: min(380px, 74vw);
-    height: 7px;
+    height: 8px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 99px;
@@ -83,28 +91,32 @@
 
 .pov-hand {
     position: absolute;
-    bottom: -30%;
+    bottom: 2%; /* Eleva las manos para que queden "flotando" en pantalla */
     z-index: 5;
-    width: clamp(900px, 130vw, 2400px);
+    width: clamp(380px, 52vw, 850px); /* Incrementado para hacer las manos más grandes */
     aspect-ratio: 16 / 9;
     height: auto;
     background-repeat: no-repeat;
-    background-position: center;
     background-size: contain;
     filter: drop-shadow(0 13px 12px #000);
-    transform-origin: bottom center;
+    pointer-events: none;
+    transition: transform 0.3s ease;
 }
 
 .pov-hand.left {
-    left: -25%;
+    left: 2vw; /* Mueve la mano izquierda hacia el centro */
+    right: auto;
     background-image: url("../media/coraline/brazo1.png");
-    transform: rotate(-8deg);
+    background-position: bottom left;
+    transform: rotate(-4deg);
 }
 
 .pov-hand.right {
-    right: -25%;
+    right: 2vw; /* Mueve la mano derecha hacia el centro */
+    left: auto;
     background-image: url("../media/coraline/brazo2.png");
-    transform: rotate(8deg);
+    background-position: bottom right;
+    transform: rotate(4deg);
 }
 
 

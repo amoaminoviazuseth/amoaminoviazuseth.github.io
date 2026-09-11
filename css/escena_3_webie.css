@@ -1,18 +1,63 @@
-/* ESCENA 3: WEBIE */
+/* ==================================================
+   ESCENA 3: WEBIE
+   ================================================== */
+
 #scene3 {
-    background:
-        linear-gradient(rgba(65, 69, 77, 0.78), rgba(16, 18, 24, 0.96)),
-        repeating-linear-gradient(90deg,
-            #656a71 0 2px,
-            #454950 2px 90px);
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: #050713;
 }
 
+/*
+ * Lienzo con relación 16:9.
+ *
+ * El fondo, el cuerpo y la cabeza se dibujan dentro
+ * del mismo sistema de coordenadas.
+ */
+.scene3-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    background: #050713;
+}
+
+/* Fondo completo */
+.scene3-background {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Niebla */
 .fog {
     position: absolute;
     inset: -30%;
+    z-index: 2;
+
     background:
-        radial-gradient(ellipse, rgba(223, 229, 230, 0.22), transparent 55%);
+        radial-gradient(
+            ellipse,
+            rgba(223, 229, 230, 0.16),
+            transparent 55%
+        );
+
     filter: blur(14px);
+    pointer-events: none;
     animation: fogMove 8s linear infinite alternate;
 }
 
@@ -22,135 +67,151 @@
     }
 }
 
+/*
+ * Rider ocupa exactamente el mismo lienzo que el fondo.
+ * No se le asigna un ancho independiente en vw.
+ */
 .rider {
     position: absolute;
-    left: 50%;
-    bottom: 28%;
-    width: 280px;
-    height: 250px;
-    z-index: 2;
-    transform: translateX(120vw) rotate(-8deg);
-    transition: transform 1.25s cubic-bezier(.14, .76, .25, 1);
+    inset: 0;
+    z-index: 3;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    transform: translateX(120%);
+    transition:
+        transform 1.25s cubic-bezier(.14, .76, .25, 1);
 }
 
 .rider.arrived {
-    transform: translateX(-50%) rotate(0);
+    transform: translateX(0);
 }
 
-/* .bike-wheel {
+.webie-container {
     position: absolute;
-    bottom: 0;
-    width: 86px;
-    height: 86px;
-    border: 9px solid #11141a;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 3px #80868d;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
 }
 
-.bike-wheel::after {
-    content: "";
+/*
+ * IMPORTANTE:
+ * webie_1_body.png y webie_1_head.png deben tener
+ * exactamente las mismas dimensiones que el fondo.
+ */
+.webie-body,
+.webie-head,
+.webie-idle {
     position: absolute;
-    inset: 12px;
-    border: 1px dashed #8b9299;
-    border-radius: 50%;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    pointer-events: none;
 }
 
-.bike-wheel.one {
-    left: 19px;
+/* Webie completo con la boca cerrada */
+.webie-idle {
+    z-index: 3;
+    display: block;
+    background-image: url("../media/webie/wybieQuiet.png");
 }
 
-.bike-wheel.two {
-    right: 15px;
-} */
-
-.bike-body {
-    /* position: absolute;
-    left: 70px;
-    bottom: 44px;
-    width: 150px;
-    height: 45px;
-    border-radius: 50% 15% 30% 20%;
-    background: linear-gradient(#2f3b45, #11161c);
-    transform: skewX(-15deg);
-    box-shadow: 0 8px 13px #000; */
-
-        position: absolute;
-
-            left: 69%;
-            transform: translateX(-50%);
-            top: 39%;
-            width: 24vw;
-            height: auto;
-            aspect-ratio: 667/438;
-
-            background: url("../media/img/moto.png") center / contain no-repeat;
-            background-size: 100%;
-}
-
+/* Cuerpo utilizado mientras habla */
 .webie-body {
-    position: absolute;
-
-    left: 50%;
-    transform: translateX(-50%);
-    top: -45%;
-    width: 20vw;
-    height: auto;
-    aspect-ratio: 1;
-
-    background: url("../media/webie/webie_1_body.png") center / contain no-repeat;
-    background-size: 100%;
-    /* background: linear-gradient(90deg, #252a34, #11141a); */
-    /* transform: rotate(-8deg); */
+    z-index: 1;
+    display: none;
+    background-image: url("../media/webie/webie_1_body.png");
 }
 
+/* Cabeza utilizada mientras habla */
 .webie-head {
+    z-index: 2;
+    display: none;
+
+    background-image: url("../media/webie/webie_1_head.png");
+
+    /*
+     * Posición correcta de la cabeza.
+     * Estos valores permanecen iguales durante toda
+     * la animación para evitar el movimiento lateral.
+     */
+    transform: translate(-2.3%, -23.5%) scale(1.02);
+    transform-origin: center;
+}
+
+/*
+ * Mientras Webie habla:
+ * - Oculta el PNG estático.
+ * - Muestra cuerpo y cabeza.
+ */
+.rider.speaking .webie-idle {
+    display: none;
+}
+
+.rider.speaking .webie-body,
+.rider.speaking .webie-head {
+    display: block;
+}
+
+/* Movimiento exclusivamente vertical */
+.rider.speaking .webie-head {
+    animation: webieHeadTalk 180ms steps(1, end) infinite;
+}
+
+@keyframes webieHeadTalk {
+    0%,
+    100% {
+        transform: translate(-2.3%, -23.5%) scale(1.02);
+    }
+
+    50% {
+        /*
+         * Solo cambia el segundo porcentaje:
+         * -23.5% pasa a -21.8%.
+         * Eso desplaza la cabeza hacia abajo.
+         */
+        transform: translate(-2.3%, -21.8%) scale(1.02);
+    }
+}
+/* El contenido interno de la cabeza */
+.mask {
     position: absolute;
-
-    left: 50%;
-    transform: translateX(-50%);
-    top: -45%;
-    width: 20vw;
-    height: auto;
-    aspect-ratio: 1;
-
-    background: url("../media/webie/webie_1_head.png") center / contain no-repeat;
-    background-size: 100%;
-    animation: 0.4s;
+    inset: 0;
 }
 
-.webie-head.tilt {
-    top: -44%;
-}
-
-/* .mask {
-    position: absolute;
-    inset: -3px;
-    display: grid;
-    place-items: center;
-    border-radius: 42%;
-    color: #1a1c20;
-    background: linear-gradient(120deg, #d2d7d7, #626a6d);
-    font-size: 40px;
-    transition: transform 700ms;
-    transform-origin: top center;
-}
-
-.mask.lifted {
-    transform: translateY(-70%) rotate(-22deg);
-}  */
+/* ==================================================
+   DIÁLOGO
+   ================================================== */
 
 .dialogue {
     position: absolute;
     left: 50%;
-    bottom: 5%;
-    z-index: 5;
-    width: min(780px, 92%);
+    bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 10;
+
+    box-sizing: border-box;
+    width: min(780px, calc(100% - 32px));
     min-height: 125px;
     padding: 21px 26px;
+
     border: 1px solid rgba(210, 222, 231, 0.3);
     border-radius: 8px;
+
     background: rgba(8, 11, 17, 0.89);
     box-shadow: 0 18px 50px #000;
+
     transform: translateX(-50%);
 }
 
@@ -169,19 +230,28 @@
 #dialogueNext {
     float: right;
     padding: 7px 13px;
+
     border: 0;
     color: #d8e6e4;
     background: transparent;
+
     cursor: pointer;
 }
 
+/* ==================================================
+   TALISMÁN LANZADO
+   ================================================== */
+
 .thrown-talisman {
     position: absolute;
-    z-index: 10;
+    z-index: 20;
+
     width: 85px;
     height: 85px;
+
     opacity: 0;
     filter: drop-shadow(0 0 12px #b5ff97);
+
     pointer-events: none;
 }
 
@@ -194,7 +264,7 @@
         left: 50%;
         top: 42%;
         opacity: 1;
-        transform: scale(.3) rotate(0);
+        transform: scale(.3) rotate(0deg);
     }
 
     100% {
