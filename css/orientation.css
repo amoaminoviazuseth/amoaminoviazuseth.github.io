@@ -1,0 +1,627 @@
+/* =========================================================
+   AVISO DE ORIENTACIÓN: BLANCO Y NEGRO
+   Debe cargarse después de responsive.css.
+   ========================================================= */
+
+.orientation-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: grid;
+    place-items: center;
+
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+
+    padding:
+        max(20px, env(safe-area-inset-top))
+        max(18px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(18px, env(safe-area-inset-left));
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    color: #f5f5f5;
+    background:
+        radial-gradient(
+            circle at center,
+            #181818 0%,
+            #080808 58%,
+            #000 100%
+        );
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 350ms ease,
+        visibility 350ms ease;
+
+    isolation: isolate;
+    overscroll-behavior: none;
+}
+
+.orientation-gate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    opacity: 0.12;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 47px,
+            rgba(255, 255, 255, 0.1) 48px,
+            transparent 49px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 47px,
+            rgba(255, 255, 255, 0.08) 48px,
+            transparent 49px
+        );
+
+    -webkit-mask-image:
+        radial-gradient(
+            circle at center,
+            black,
+            transparent 78%
+        );
+
+    mask-image:
+        radial-gradient(
+            circle at center,
+            black,
+            transparent 78%
+        );
+}
+
+.orientation-gate.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+html.orientation-blocked,
+html.orientation-blocked body {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    touch-action: none;
+}
+
+/* =========================================================
+   CONTENIDO
+   ========================================================= */
+
+.orientation-content {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: min(100%, 470px);
+    margin: auto;
+    padding: clamp(24px, 7vw, 45px);
+
+    border: 1px solid rgba(255, 255, 255, 0.26);
+
+    color: #f5f5f5;
+    text-align: center;
+
+    background: rgba(0, 0, 0, 0.76);
+
+    box-shadow:
+        0 35px 100px rgba(0, 0, 0, 0.9),
+        inset 0 0 0 7px #080808,
+        inset 0 0 0 8px rgba(255, 255, 255, 0.08);
+
+    animation: orientationEntrance 650ms ease both;
+}
+
+.orientation-content::before,
+.orientation-content::after {
+    content: "";
+    position: absolute;
+
+    width: 11px;
+    height: 11px;
+
+    border-color: #fff;
+    opacity: 0.65;
+}
+
+.orientation-content::before {
+    top: 13px;
+    left: 13px;
+
+    border-top: 1px solid;
+    border-left: 1px solid;
+}
+
+.orientation-content::after {
+    right: 13px;
+    bottom: 13px;
+
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+
+@keyframes orientationEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================================================
+   TELÉFONO
+   ========================================================= */
+
+.orientation-phone-area {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    width: min(80vw, 260px);
+    height: 190px;
+    margin-bottom: 16px;
+
+    perspective: 900px;
+}
+
+.orientation-phone {
+    position: relative;
+    z-index: 3;
+
+    width: 78px;
+    height: 144px;
+    padding: 8px 6px;
+
+    border: 3px solid #f4f4f4;
+    border-radius: 13px;
+
+    background: #060606;
+
+    box-shadow:
+        0 0 0 1px #252525,
+        0 18px 35px rgba(0, 0, 0, 0.75);
+
+    transform-origin: center;
+    animation:
+        orientationPhoneRotate
+        2.8s
+        cubic-bezier(.65, 0, .22, 1)
+        infinite;
+}
+
+.orientation-speaker {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+
+    width: 22px;
+    height: 2px;
+
+    border-radius: 10px;
+    background: #d7d7d7;
+
+    transform: translateX(-50%);
+}
+
+.orientation-home {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+
+    width: 5px;
+    height: 5px;
+
+    border: 1px solid #d7d7d7;
+    border-radius: 50%;
+
+    transform: translateX(-50%);
+}
+
+.orientation-phone-screen {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid #383838;
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #191919,
+            #050505
+        );
+}
+
+.orientation-phone-screen::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 42px;
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.45);
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-35deg);
+}
+
+.orientation-phone-screen::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.orientation-cross {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+}
+
+.orientation-cross::before,
+.orientation-cross::after {
+    content: "";
+    position: absolute;
+
+    background: #fff;
+}
+
+.orientation-cross::before {
+    top: 3px;
+    left: 0;
+
+    width: 8px;
+    height: 1px;
+}
+
+.orientation-cross::after {
+    top: 0;
+    left: 3px;
+
+    width: 1px;
+    height: 8px;
+}
+
+.cross-one {
+    top: 20%;
+    left: 22%;
+}
+
+.cross-two {
+    right: 20%;
+    bottom: 22%;
+
+    opacity: 0.45;
+}
+
+.orientation-line {
+    position: absolute;
+    bottom: 15%;
+    left: 15%;
+
+    width: 45%;
+    height: 2px;
+
+    background: #fff;
+}
+
+.orientation-orbit {
+    position: absolute;
+
+    width: 182px;
+    height: 182px;
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+
+    animation:
+        orientationOrbit
+        2.8s
+        ease-out
+        infinite;
+}
+
+.orientation-arrow {
+    position: absolute;
+    top: 49%;
+    right: 4%;
+    z-index: 5;
+
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+
+    animation:
+        orientationArrow
+        2.8s
+        ease-in-out
+        infinite;
+}
+
+@keyframes orientationPhoneRotate {
+    0%,
+    18% {
+        transform:
+            rotate(0deg)
+            scale(1);
+    }
+
+    48%,
+    82% {
+        transform:
+            rotate(90deg)
+            scale(1.07);
+    }
+
+    100% {
+        transform:
+            rotate(90deg)
+            scale(1.07);
+    }
+}
+
+@keyframes orientationOrbit {
+    0% {
+        opacity: 0;
+        transform: scale(0.65);
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes orientationArrow {
+    0%,
+    15% {
+        opacity: 0;
+        transform:
+            translate(-24px, 15px)
+            rotate(-65deg);
+    }
+
+    35%,
+    62% {
+        opacity: 1;
+        transform:
+            translate(0, 0)
+            rotate(0deg);
+    }
+
+    85%,
+    100% {
+        opacity: 0;
+        transform:
+            translate(-20px, -18px)
+            rotate(-70deg);
+    }
+}
+
+/* =========================================================
+   TEXTO
+   ========================================================= */
+
+.orientation-label {
+    margin: 0 0 9px;
+
+    color: #aaa;
+    font-family: "VCR", monospace;
+    font-size: clamp(10px, 2.8vw, 13px);
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+}
+
+.orientation-content h2 {
+    margin: 0 0 15px;
+
+    color: #fff;
+    font-family: "VCR", monospace;
+    font-size: clamp(30px, 8vw, 43px);
+    font-weight: 400;
+    line-height: 1.12;
+
+    text-shadow: 3px 3px #282828;
+}
+
+.orientation-description {
+    width: min(100%, 410px);
+    margin: 0 auto;
+
+    color: #cfcfcf;
+    font-family: "VCR", monospace;
+    font-size: clamp(13px, 3.6vw, 17px);
+    line-height: 1.55;
+}
+
+.orientation-divider {
+    position: relative;
+
+    width: min(250px, 75%);
+    height: 3px;
+
+    margin: 23px auto 14px;
+    overflow: hidden;
+
+    background: #292929;
+}
+
+.orientation-divider span {
+    position: absolute;
+    inset-block: 0;
+    left: -45%;
+
+    width: 45%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #fff,
+            transparent
+        );
+
+    animation:
+        orientationScan
+        1.25s
+        ease-in-out
+        infinite;
+}
+
+@keyframes orientationScan {
+    to {
+        left: 100%;
+    }
+}
+
+.orientation-status {
+    min-height: 20px;
+    margin: 0 0 18px;
+
+    color: #999;
+    font-family: "VCR", monospace;
+    font-size: clamp(10px, 2.8vw, 13px);
+    line-height: 1.4;
+}
+
+.orientation-button {
+    width: min(100%, 300px);
+    min-height: 48px;
+    padding: 12px 18px;
+
+    border: 1px solid #e9e9e9;
+    border-radius: 0;
+
+    color: #fff;
+    background: #080808;
+
+    font-family: "VCR", monospace;
+    font-size: clamp(12px, 3.4vw, 15px);
+
+    box-shadow:
+        5px 5px 0 #292929;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.orientation-button:hover {
+    color: #000;
+    background: #fff;
+
+    transform: translate(-2px, -2px);
+
+    box-shadow:
+        7px 7px 0 #292929;
+}
+
+.orientation-button:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 #292929;
+}
+
+/* Ocultar automáticamente cuando está horizontal */
+@media (orientation: landscape) {
+    .orientation-gate {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+/* Teléfonos verticales con poca altura */
+@media (max-height: 720px) and (orientation: portrait) {
+    .orientation-gate {
+        place-items: start center;
+    }
+
+    .orientation-content {
+        margin: auto;
+        padding: 20px 18px;
+    }
+
+    .orientation-phone-area {
+        height: 145px;
+        margin-bottom: 8px;
+    }
+
+    .orientation-phone {
+        width: 65px;
+        height: 120px;
+    }
+
+    .orientation-orbit {
+        width: 145px;
+        height: 145px;
+    }
+
+    .orientation-content h2 {
+        margin-bottom: 9px;
+        font-size: clamp(26px, 7vw, 35px);
+    }
+
+    .orientation-description {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .orientation-divider {
+        margin-top: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orientation-phone {
+        animation: none;
+        transform: rotate(90deg);
+    }
+
+    .orientation-orbit,
+    .orientation-arrow,
+    .orientation-divider span {
+        animation-duration: 3s;
+    }
+}

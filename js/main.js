@@ -1,5 +1,8 @@
 import { CONFIG } from './config.js';
 import { elements } from './dom.js';
+
+import { setupOrientationGate } from './orientation.js';
+
 import { setupScene1 } from './scenes/scene1.js';
 import { setupScene2 } from './scenes/scene2.js';
 import { setupScene3 } from './scenes/scene3.js';
@@ -9,40 +12,66 @@ import { setupScene5 } from './scenes/scene5.js';
 function insertPhoto(containerId, source) {
     if (!source) return;
 
-    const container = document.querySelector(containerId);
+    const container =
+        document.querySelector(containerId);
+
     if (!container) return;
-    
+
     const image = document.createElement("img");
 
     image.src = source;
     image.alt = "Un recuerdo de nosotros";
+    image.draggable = false;
 
-    container.textContent = "";
-    container.appendChild(image);
+    container.replaceChildren(image);
 }
 
 function applyCustomization() {
-    document.querySelectorAll("[data-girlfriend-name]").forEach((element) => {
-        element.textContent = CONFIG.girlfriendName;
-    });
+    document
+        .querySelectorAll(
+            "[data-girlfriend-name]"
+        )
+        .forEach((element) => {
+            element.textContent =
+                CONFIG.girlfriendName;
+        });
 
     if (elements.letterText) {
-        elements.letterText.textContent = CONFIG.letter;
-    }
-    if (elements.signature) {
-        elements.signature.textContent = CONFIG.signature;
+        elements.letterText.textContent =
+            CONFIG.letter;
     }
 
-    insertPhoto("#photoOne", CONFIG.photoOne);
-    insertPhoto("#photoTwo", CONFIG.photoTwo);
+    if (elements.signature) {
+        elements.signature.textContent =
+            CONFIG.signature;
+    }
+
+    insertPhoto(
+        "#photoOne",
+        CONFIG.photoOne
+    );
+
+    insertPhoto(
+        "#photoTwo",
+        CONFIG.photoTwo
+    );
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    applyCustomization();
-    
-    setupScene1();
-    setupScene2();
-    setupScene3();
-    setupScene4();
-    setupScene5();
-});
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        /*
+         * Se configura primero para bloquear la interfaz
+         * inmediatamente si el dispositivo está vertical.
+         */
+        setupOrientationGate();
+
+        applyCustomization();
+
+        setupScene1();
+        setupScene2();
+        setupScene3();
+        setupScene4();
+        setupScene5();
+    }
+);

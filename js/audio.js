@@ -296,20 +296,3 @@ export function startMusicBox() {
 export function stopMusicBox() {
     clearInterval(musicTimer);
 }
-
-export function speakWhisper() {
-    if (!("speechSynthesis" in window)) return;
-
-    window.speechSynthesis.cancel();
-
-    const phrase = new SpeechSynthesisUtterance(
-        `${CONFIG.girlfriendName}… ven a casa…`
-    );
-
-    phrase.lang = "es-ES";
-    phrase.rate = 0.55;
-    phrase.pitch = 1.3;
-    phrase.volume = 0.28;
-
-    window.speechSynthesis.speak(phrase);
-}

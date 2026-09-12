@@ -6,32 +6,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080611">
 
-  <link rel="stylesheet" href="./css/global.css" />
-  <link rel="stylesheet" href="./css/pantalla_de_sonido.css" />
-  <link rel="stylesheet" href="./css/escena_1.css" />
-  <link rel="stylesheet" href="./css/escena_2_t_nel.css" />
-  <link rel="stylesheet" href="./css/escena_3_webie.css" />
-  <link rel="stylesheet" href="./css/talism_n.css" />
-  <link rel="stylesheet" href="./css/escena_4_sala_y_minijuego.css" />
-  <link rel="stylesheet" href="./css/escena_5_final.css" />
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/pantalla_de_sonido.css">
+  <link rel="stylesheet" href="./css/escena_1.css">
+  <link rel="stylesheet" href="./css/escena_2_t_nel.css">
+  <link rel="stylesheet" href="./css/escena_3_webie.css">
+  <link rel="stylesheet" href="./css/talism_n.css">
+  <link rel="stylesheet" href="./css/escena_4_sala_y_minijuego.css">
+  <link rel="stylesheet" href="./css/escena_5_final.css">
+
+  <!-- Siempre debe ser el último -->
+  <link rel="stylesheet" href="./css/responsive.css">
+  <link rel="stylesheet" href="./css/orientation.css">
+
 
   <title>Una puerta para ti</title>
   <link rel="preload" href="./media/img/tunnel_last_anim.webp" as="image" type="image/webp">
 
+  <meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+  >
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+
+  <meta name="theme-color" content="#000000">
+
+  <link rel="manifest" href="./manifest.webmanifest">
 </head>
 
 <body>
+  <!-- AVISO DE ORIENTACIÓN -->
+  <div id="orientationGate" class="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientationTitle"
+    aria-describedby="orientationDescription" aria-hidden="true">
+    <div class="orientation-content">
+
+      <div class="orientation-phone-area" aria-hidden="true">
+        <div class="orientation-orbit"></div>
+
+        <div class="orientation-phone">
+          <div class="orientation-speaker"></div>
+
+          <div class="orientation-phone-screen">
+            <span class="orientation-cross cross-one"></span>
+            <span class="orientation-cross cross-two"></span>
+            <span class="orientation-line"></span>
+          </div>
+
+          <div class="orientation-home"></div>
+        </div>
+
+        <div class="orientation-arrow">↻</div>
+      </div>
+
+      <p class="orientation-label">
+        MODO HORIZONTAL
+      </p>
+
+      <h2 id="orientationTitle">
+        Gira tu teléfono
+      </h2>
+
+      <p id="orientationDescription" class="orientation-description">
+        Esta experiencia fue diseñada para jugarse
+        horizontalmente y en pantalla completa.
+      </p>
+
+      <div class="orientation-divider" aria-hidden="true">
+        <span></span>
+      </div>
+
+      <p id="orientationStatus" class="orientation-status" aria-live="polite">
+        Gira el dispositivo para continuar
+      </p>
+
+      <button id="requestLandscape" class="orientation-button" type="button">
+        Entrar en pantalla completa
+      </button>
+
+    </div>
+  </div>
+
   <div id="soundGate">
+    <audio id="audioMenu" src="./media/sounds/menu.mp3" preload="auto" loop></audio>
+
     <div class="gate-card">
       <div class="gate-symbol">⌑</div>
-      <h1>Hay una puerta esperandote</h1>
+
+      <h1>Hay una puerta esperándote</h1>
+
       <p>
-        Esta experiencia utiliza sonido. Ponte audifonos,
-        apaga las luces y no confies en todo lo que veas.
+        Esta experiencia utiliza sonido. Ponte audífonos,
+        apaga las luces y no confíes en todo lo que veas.
       </p>
-      <button id="startExperience" class="primary-button">
-        Entrar con sonido
-      </button>
+
+      <div class="gate-actions">
+        <button id="enableMenuMusic" class="menu-music-button">
+          ♫ Activar música
+        </button>
+
+        <button id="startExperience" class="primary-button">
+          Entrar con sonido
+        </button>
+      </div>
     </div>
   </div>
 
@@ -45,35 +128,24 @@
     </h2>
 
     <div id="mouseTracks" class="mouse-tracks" aria-hidden="true">
-      <!--
-      <span>•</span><span>•</span><span>•</span><span>•</span>
-      <span>•</span><span>•</span><span>•</span><span>•</span>
-      <span>•</span><span>•</span><span>•</span><span>•</span>
-       -->
     </div>
 
 
     <button id="littleDoor" class="little-door" aria-label="Abrir la pequeña puerta">
-      <!--
-      <span class="door-frame"></span>
-      <span class="door-panel">
-        <span class="door-detail"></span>
-        <span class="knob"></span>
-      </span>
-      -->
     </button>
 
     <div id="doorHint" class="door-hint">Haz clic en la puerta</div>
   </section>
 
   <!-- ESCENA 2 -->
-  <audio id="audioSusurros" src="./media/sounds/WhispersSusurros.mp3" loop style="display: none;"></audio>
-  <section id="scene2" class="scene" aria-label="Túnel">
+  <audio id="audioSusurros" src="./media/sounds/WhispersSusurros.mp3" loop preload="auto"></audio>
 
+  <section id="scene2" class="scene" aria-label="Túnel">
     <div class="tunnel"></div>
+
     <div class="tunnel-instruction">
       <h2>Sigue avanzando</h2>
-      <p>Haz clic para agarrarte de la tela del tunel</p>
+      <p>Haz clic para agarrarte de la tela del túnel</p>
     </div>
 
     <div class="progress-track">
@@ -83,7 +155,11 @@
     <div id="leftHand" class="pov-hand left"></div>
     <div id="rightHand" class="pov-hand right"></div>
 
-    <div id="whisper" class="whisper">Ven a caaaasa…</div>
+    <div id="whisper" class="whisper"></div>
+
+    <audio id="audioBruja0" src="./media/sounds/bruja0.mp3" preload="auto"></audio>
+
+    <audio id="audioBruja1" src="./media/sounds/bruja1.mp3" preload="auto"></audio>
   </section>
 
   <!-- ESCENA 3 -->
@@ -129,6 +205,8 @@
 
   <!-- ESCENA 4 -->
   <section id="scene4" class="scene">
+    <audio id="minigameMusic" src="./media/sounds/minigame.mp3" preload="auto" loop></audio>
+
     <div class="room">
       <div class="buttons-layer">
         <button id="buttonPainting" class="hidden-button soul0" aria-label="Botón oculto">

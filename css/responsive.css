@@ -1,0 +1,2034 @@
+/* =========================================================
+   RESPONSIVE.CSS
+   Debe cargarse después de todos los demás archivos CSS.
+   ========================================================= */
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
+
+html,
+body {
+    width: 100%;
+    min-width: 320px;
+    height: 100%;
+    min-height: 100%;
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+    overscroll-behavior: none;
+
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.scene,
+#soundGate {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.primary-button,
+.menu-music-button,
+#dialogueNext,
+.replay {
+    min-height: 44px;
+}
+
+/* =========================================================
+   CORRECCIÓN GLOBAL DE LA PUERTA
+   ========================================================= */
+
+/*
+ * La puerta y su brillo usan el mismo centro horizontal.
+ */
+#scene1 .scene1-light,
+#scene1 .little-door {
+    left: 50%;
+}
+
+/*
+ * El brillo conserva su desplazamiento vertical.
+ */
+#scene1 .scene1-light {
+    transform: translate(-50%, 26.8%);
+}
+
+/*
+ * La puerta permanece centrada antes y después de abrirse.
+ */
+#scene1 .little-door {
+    transform: translateX(-50%);
+}
+
+#scene1 .little-door.open {
+    transform:
+        translateX(-50%)
+        rotateY(-116deg);
+}
+
+/*
+ * La indicación permanece centrada en pantallas normales.
+ */
+#scene1 .door-hint {
+    right: 12px;
+    left: 12px;
+
+    width: auto;
+    text-align: center;
+}
+
+/* =========================================================
+   TELÉFONOS Y TABLETS PEQUEÑAS
+   ========================================================= */
+
+@media (max-width: 768px) {
+    /* -----------------------------------------------------
+       GLOBAL
+       ----------------------------------------------------- */
+
+    body,
+    p {
+        font-size: clamp(18px, 5vw, 24px);
+        line-height: 1.35;
+    }
+
+    .screen-vignette {
+        box-shadow: inset 0 0 55px #000;
+    }
+
+    .primary-button {
+        min-width: min(210px, 82vw);
+        max-width: calc(100vw - 32px);
+
+        padding: 12px 18px;
+
+        font-size: clamp(16px, 4.5vw, 20px);
+    }
+
+    /* -----------------------------------------------------
+       MENÚ DE SONIDO
+       ----------------------------------------------------- */
+
+    #soundGate {
+        display: block;
+
+        padding:
+            max(20px, env(safe-area-inset-top))
+            max(16px, env(safe-area-inset-right))
+            max(20px, env(safe-area-inset-bottom))
+            max(16px, env(safe-area-inset-left));
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        background-position: center;
+        background-attachment: scroll;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .gate-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        width: min(100%, 520px);
+        min-height: calc(
+            100dvh
+            - max(20px, env(safe-area-inset-top))
+            - max(20px, env(safe-area-inset-bottom))
+        );
+
+        margin: 0 auto;
+    }
+
+    .gate-symbol {
+        margin-bottom: 10px;
+        font-size: clamp(40px, 13vw, 58px);
+    }
+
+    .gate-card h1 {
+        width: 100%;
+        margin: 0 0 12px;
+
+        font-size: clamp(28px, 9vw, 45px);
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+    }
+
+    .gate-card p {
+        width: min(100%, 440px);
+        margin: 0 0 22px;
+
+        font-size: clamp(17px, 5vw, 22px);
+        line-height: 1.45;
+    }
+
+    .gate-actions {
+        width: 100%;
+        gap: 12px;
+    }
+
+    .menu-music-button {
+        width: min(260px, 84vw);
+        padding: 11px 16px;
+
+        font-size: clamp(15px, 4.2vw, 18px);
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 1: PUERTA
+       ----------------------------------------------------- */
+
+    #scene1 {
+        min-height: 100dvh;
+    }
+
+    #scene1 .invitation {
+        top: max(
+            7%,
+            calc(env(safe-area-inset-top) + 18px)
+        );
+
+        right: 0;
+        left: 0;
+
+        width: calc(100% - 28px);
+        max-width: 540px;
+
+        margin-right: auto;
+        margin-left: auto;
+
+        font-size: clamp(21px, 6.5vw, 32px);
+        line-height: 1.25;
+    }
+
+    #scene1 .scene1-light,
+    #scene1 .little-door {
+        bottom: max(
+            12%,
+            calc(env(safe-area-inset-bottom) + 55px)
+        );
+    }
+
+    #scene1 .scene1-light {
+        width: min(108vw, 430px);
+        max-height: 68dvh;
+
+        transform: translate(-50%, 26.8%);
+    }
+
+    #scene1 .little-door {
+        width: clamp(92px, 29vw, 130px);
+        max-height: 48dvh;
+
+        transform: translateX(-50%);
+    }
+
+    #scene1 .little-door.open {
+        transform:
+            translateX(-50%)
+            rotateY(-116deg);
+    }
+
+    #scene1 .door-hint {
+        right: 14px;
+        bottom: max(
+            14px,
+            calc(env(safe-area-inset-bottom) + 8px)
+        );
+        left: 14px;
+
+        width: auto;
+
+        font-size: clamp(11px, 3.4vw, 14px);
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    #scene1 .mouse-tracks {
+        top: 65%;
+        gap: 16px;
+
+        font-size: 13px;
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 2: TÚNEL
+       ----------------------------------------------------- */
+
+    #scene2 {
+        min-height: 100dvh;
+        touch-action: manipulation;
+    }
+
+    #scene2 .tunnel,
+    #scene2 .tunnel-lastframe {
+        position: absolute;
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+
+        margin: 0;
+
+        background-position: center;
+        background-attachment: scroll;
+        background-size: cover;
+    }
+
+    #scene2 .tunnel-instruction {
+        top: max(
+            4%,
+            calc(env(safe-area-inset-top) + 10px)
+        );
+
+        width: calc(100% - 24px);
+        max-width: 580px;
+    }
+
+    #scene2 .tunnel-instruction h2 {
+        margin-bottom: 5px;
+
+        font-size: clamp(22px, 7vw, 32px);
+        line-height: 1.2;
+    }
+
+    #scene2 .tunnel-instruction p {
+        padding: 0 10px;
+
+        font-size: clamp(13px, 4vw, 17px);
+        line-height: 1.35;
+    }
+
+    #scene2 .progress-track {
+        top: max(
+            18%,
+            calc(env(safe-area-inset-top) + 105px)
+        );
+
+        width: min(76vw, 360px);
+        height: 9px;
+    }
+
+    /*
+     * Las manos pueden ser grandes, pero sus contenedores
+     * permanecen completamente dentro de la pantalla.
+     */
+    #scene2 .pov-hand {
+        bottom: max(
+            0px,
+            env(safe-area-inset-bottom)
+        );
+
+        width: min(72vw, 500px);
+        height: auto;
+        max-height: none;
+        aspect-ratio: 16 / 9;
+
+        background-size: contain;
+        pointer-events: none;
+    }
+
+    #scene2 .pov-hand.left {
+        right: auto;
+        left: 0;
+
+        background-position: left bottom;
+        transform: rotate(-4deg);
+    }
+
+    #scene2 .pov-hand.right {
+        right: 0;
+        left: auto;
+
+        background-position: right bottom;
+        transform: rotate(4deg);
+    }
+
+    /*
+     * Movimiento reducido para impedir que se recorten
+     * durante la animación de tirar de la tela.
+     */
+    @keyframes pullLeft {
+        0%,
+        100% {
+            transform: rotate(-4deg);
+        }
+
+        40% {
+            transform:
+                translate(13%, -18%)
+                rotate(8deg);
+        }
+    }
+
+    @keyframes pullRight {
+        0%,
+        100% {
+            transform: rotate(4deg);
+        }
+
+        40% {
+            transform:
+                translate(-13%, -18%)
+                rotate(-8deg);
+        }
+    }
+
+    #scene2 .whisper {
+        top: 36%;
+        right: 16px;
+        left: 16px;
+
+        width: auto;
+
+        font-size: clamp(17px, 5.5vw, 27px);
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 3: WEBIE
+       ----------------------------------------------------- */
+
+    #scene3 {
+        width: 100%;
+        height: 100dvh;
+    }
+
+    /*
+     * La escena conserva la proporción del lienzo.
+     * El fondo, cuerpo y cabeza reciben la misma escala.
+     */
+    #scene3 .scene3-stage {
+        top: 50%;
+        left: 50%;
+
+        width: max(
+            100vw,
+            calc(100dvh * 16 / 9)
+        );
+
+        height: max(
+            100dvh,
+            calc(100vw * 9 / 16)
+        );
+
+        transform: translate(-50%, -50%);
+    }
+
+    #scene3 .scene3-background {
+        object-fit: fill;
+    }
+
+    #scene3 .webie-body,
+    #scene3 .webie-head,
+    #scene3 .webie-idle {
+        width: 100%;
+        height: 100%;
+    }
+
+    #scene3 .dialogue {
+        bottom: max(
+            10px,
+            calc(env(safe-area-inset-bottom) + 6px)
+        );
+
+        width: calc(100% - 20px);
+        min-height: 132px;
+        max-height: min(42dvh, 280px);
+
+        padding: 14px 16px 12px;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        border-radius: 6px;
+    }
+
+    #scene3 .dialogue strong {
+        display: block;
+        margin-bottom: 5px;
+
+        font-size: clamp(16px, 4.5vw, 21px);
+    }
+
+    #scene3 #dialogueText {
+        min-height: 40px;
+
+        font-size: clamp(18px, 5.2vw, 24px);
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+    }
+
+    #scene3 #dialogueNext {
+        min-width: 120px;
+        padding: 7px 5px;
+
+        font-size: clamp(16px, 4.5vw, 21px);
+        text-align: right;
+    }
+
+    #scene3 .thrown-talisman {
+        width: clamp(58px, 18vw, 82px);
+        height: clamp(58px, 18vw, 82px);
+    }
+
+    @keyframes throwTalisman {
+        0% {
+            left: 50%;
+            top: 40%;
+
+            opacity: 1;
+
+            transform:
+                scale(0.3)
+                rotate(0deg);
+        }
+
+        100% {
+            left: calc(100% - 82px);
+            top: calc(100% - 155px);
+
+            opacity: 1;
+
+            transform:
+                scale(1)
+                rotate(760deg);
+        }
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 4: MINIJUEGO
+       ----------------------------------------------------- */
+
+    #scene4,
+    #scene4 .room {
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+
+        background-position: center;
+        background-size: cover;
+    }
+
+    #scene4 .game-hud {
+        top: max(
+            8px,
+            calc(env(safe-area-inset-top) + 5px)
+        );
+
+        display: grid;
+        grid-template-columns:
+            auto
+            minmax(90px, 1fr);
+
+        gap: 9px;
+
+        width: calc(100% - 20px);
+        padding: 9px 12px;
+
+        border-radius: 16px;
+    }
+
+    #scene4 .counter {
+        min-width: 0;
+
+        font-size: clamp(10px, 3vw, 13px);
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+    }
+
+    #scene4 .danger-track {
+        width: 100%;
+        min-width: 80px;
+        height: 10px;
+    }
+
+    #scene4 .hidden-button {
+        width: clamp(52px, 15vw, 72px);
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    #scene4 #buttonPainting {
+        top: 27%;
+        left: 14%;
+    }
+
+    #scene4 #buttonSofa {
+        top: 69%;
+        left: 43%;
+    }
+
+    #scene4 #buttonClock {
+        top: 35%;
+        right: 7%;
+    }
+
+    #scene4 .buttons-layer {
+        -webkit-mask-image:
+            radial-gradient(
+                circle at
+                var(--lens-x, -999px)
+                var(--lens-y, -999px),
+                black 78px,
+                transparent 80px
+            );
+
+        mask-image:
+            radial-gradient(
+                circle at
+                var(--lens-x, -999px)
+                var(--lens-y, -999px),
+                black 78px,
+                transparent 80px
+            );
+    }
+
+    #scene4 .lens {
+        width: min(42vw, 160px);
+        height: min(42vw, 160px);
+
+        border-width: 4px;
+
+        -webkit-backdrop-filter:
+            grayscale(1)
+            brightness(1.8)
+            contrast(1.5);
+
+        backdrop-filter:
+            grayscale(1)
+            brightness(1.8)
+            contrast(1.5);
+    }
+
+    #scene4 .drag-talisman {
+        width: clamp(62px, 19vw, 78px);
+        height: clamp(62px, 19vw, 78px);
+
+        touch-action: none;
+    }
+
+    /*
+     * Mano enemiga enorme.
+     */
+    #scene4 .hand-enemy {
+        top: 5%;
+        right: -60%;
+
+        width: max(1050px, 270vw);
+        max-width: none;
+
+        transform:
+            translateX(
+                calc(
+                    112%
+                    - var(--danger) * 1.09%
+                )
+            )
+            rotate(-9deg);
+    }
+
+    #scene4 .game-tip {
+        right: 10px;
+        bottom: max(
+            8px,
+            calc(env(safe-area-inset-bottom) + 5px)
+        );
+        left: 10px;
+
+        width: auto;
+        max-width: none;
+        padding: 7px 10px;
+
+        border-radius: 12px;
+
+        font-size: clamp(10px, 3vw, 13px);
+        line-height: 1.3;
+
+        transform: none;
+    }
+
+    #scene4 .game-over {
+        padding:
+            max(20px, env(safe-area-inset-top))
+            20px
+            max(20px, env(safe-area-inset-bottom));
+    }
+
+    #scene4 .game-over-card {
+        width: min(100%, 480px);
+    }
+
+    #scene4 .game-over-card h2 {
+        font-size: clamp(34px, 12vw, 58px);
+        line-height: 1.1;
+    }
+
+    #scene4 .game-over-card p {
+        font-size: clamp(18px, 5.5vw, 24px);
+        line-height: 1.4;
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 5: FINAL
+       ----------------------------------------------------- */
+
+    #scene5 {
+        width: 100%;
+        height: 100dvh;
+
+        background-position: center;
+        background-size: cover;
+    }
+
+    #scene5 .final-title {
+        top: max(
+            15px,
+            calc(env(safe-area-inset-top) + 8px)
+        );
+
+        width: calc(100% - 26px);
+
+        font-size: clamp(21px, 6.5vw, 32px);
+        line-height: 1.2;
+    }
+
+    #scene5 #wishButton {
+        top: auto;
+        bottom: max(
+            18px,
+            calc(env(safe-area-inset-bottom) + 10px)
+        );
+
+        width: min(
+            245px,
+            calc(100% - 34px)
+        );
+
+        min-width: 0;
+
+        transform: translateX(-50%);
+    }
+
+    #scene5 #wishButton:hover {
+        transform:
+            translateX(-50%)
+            scale(1.02);
+    }
+
+    #scene5 .star {
+        top: 50%;
+    }
+
+    /* -----------------------------------------------------
+       CARTA FINAL
+       ----------------------------------------------------- */
+
+    #scene5 .letter-modal {
+        width: 100%;
+        height: 100dvh;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        overscroll-behavior-y: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #scene5 .letter-scroll {
+        display: block;
+
+        width: 100%;
+        min-height: max-content;
+
+        padding:
+            max(20px, env(safe-area-inset-top))
+            14px
+            max(65px, env(safe-area-inset-bottom));
+    }
+
+    #scene5 .letter-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        width: 100%;
+        max-width: 560px;
+
+        margin: 0 auto;
+    }
+
+    #scene5 .letter-paper {
+        width: 100%;
+        padding: 34px 24px;
+
+        transform: none;
+    }
+
+    #scene5 .letter-paper::before {
+        inset: 8px;
+    }
+
+    #scene5 .letter-paper h2 {
+        margin-bottom: 20px;
+
+        font-size: clamp(23px, 7vw, 30px);
+        line-height: 1.25;
+    }
+
+    #scene5 #letterText {
+        font-size: clamp(18px, 5.2vw, 24px);
+        line-height: 1.5;
+
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    #scene5 .signature {
+        font-size: clamp(20px, 6vw, 28px);
+        line-height: 1.3;
+    }
+
+    #scene5 .replay {
+        width: 100%;
+        margin-top: 25px;
+
+        font-size: clamp(13px, 4vw, 16px);
+        line-height: 1.35;
+    }
+
+    #scene5 .polaroids {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 42px;
+
+        width: 100%;
+        min-height: 0;
+        padding: 28px 4px;
+    }
+
+    #scene5 .polaroids::before {
+        display: none;
+    }
+
+    #scene5 .polaroid {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+
+        width: min(270px, 78vw);
+    }
+
+    #scene5 .polaroid-one {
+        align-self: flex-start;
+        transform: rotate(-4deg);
+    }
+
+    #scene5 .polaroid-two {
+        align-self: flex-end;
+        transform: rotate(4deg);
+    }
+
+    #scene5 .polaroid figcaption {
+        font-size: clamp(17px, 5vw, 21px);
+    }
+
+    #scene5 .scroll-hint {
+        margin: 10px 0 0;
+        padding-bottom: 10px;
+
+        font-size: clamp(12px, 3.7vw, 15px);
+    }
+}
+
+/* =========================================================
+   CELULARES VERTICALES
+   ========================================================= */
+
+@media (max-width: 768px) and (orientation: portrait) {
+    /* Puerta */
+
+    #scene1 .scene1-light,
+    #scene1 .little-door {
+        bottom: max(
+            12%,
+            calc(env(safe-area-inset-bottom) + 55px)
+        );
+    }
+
+    #scene1 .scene1-light {
+        width: min(108vw, 430px);
+    }
+
+    #scene1 .little-door {
+        width: clamp(92px, 29vw, 130px);
+    }
+
+    #scene1 .door-hint {
+        bottom: max(
+            14px,
+            calc(env(safe-area-inset-bottom) + 8px)
+        );
+    }
+
+    /* Manos */
+
+    #scene2 .pov-hand {
+        bottom: max(
+            0px,
+            env(safe-area-inset-bottom)
+        );
+
+        width: min(72vw, 500px);
+        max-height: none;
+    }
+
+    #scene2 .pov-hand.left {
+        right: auto;
+        left: 0;
+    }
+
+    #scene2 .pov-hand.right {
+        right: 0;
+        left: auto;
+    }
+}
+
+/* =========================================================
+   TELÉFONOS MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 380px) {
+    .gate-card h1 {
+        font-size: 27px;
+    }
+
+    .gate-card p {
+        font-size: 17px;
+    }
+
+    #scene1 .invitation {
+        top: 7%;
+        font-size: 20px;
+    }
+
+    #scene1 .scene1-light {
+        width: min(115vw, 400px);
+    }
+
+    #scene1 .little-door {
+        width: 100px;
+    }
+
+    #scene2 .pov-hand {
+        width: min(74vw, 285px);
+    }
+
+    #scene3 .dialogue {
+        width: calc(100% - 12px);
+        padding: 12px;
+    }
+
+    #scene3 #dialogueText {
+        font-size: 17px;
+    }
+
+    #scene4 .game-hud {
+        width: calc(100% - 12px);
+        padding: 8px 9px;
+    }
+
+    #scene4 .counter {
+        font-size: 9px;
+    }
+
+    #scene4 .lens {
+        width: 142px;
+        height: 142px;
+    }
+
+    #scene4 .drag-talisman {
+        width: 62px;
+        height: 62px;
+    }
+
+    #scene5 .letter-paper {
+        padding: 30px 19px;
+    }
+
+    #scene5 #letterText {
+        font-size: 18px;
+    }
+
+    #scene5 .polaroid {
+        width: min(245px, 82vw);
+    }
+}
+
+/* =========================================================
+   CELULARES HORIZONTALES Y PANTALLAS BAJAS
+   ========================================================= */
+
+@media (max-height: 520px) and (orientation: landscape) {
+    /* -----------------------------------------------------
+       MENÚ
+       ----------------------------------------------------- */
+
+    #soundGate {
+        overflow-y: auto;
+    }
+
+    .gate-card {
+        min-height: auto;
+        padding: 15px 0;
+    }
+
+    .gate-symbol {
+        display: none;
+    }
+
+    .gate-card h1 {
+        margin-bottom: 6px;
+
+        font-size: clamp(24px, 5vw, 36px);
+    }
+
+    .gate-card p {
+        margin-bottom: 12px;
+
+        font-size: 15px;
+        line-height: 1.3;
+    }
+
+    .gate-actions {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        gap: 10px;
+    }
+
+    .menu-music-button,
+    .primary-button {
+        width: auto;
+        min-width: 170px;
+
+        padding: 9px 14px;
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 1: PUERTA
+       ----------------------------------------------------- */
+
+    #scene1 .invitation {
+        top: max(
+            12px,
+            calc(env(safe-area-inset-top) + 5px)
+        );
+
+        width: min(
+            720px,
+            calc(100% - 30px)
+        );
+
+        font-size: clamp(20px, 3.5vw, 30px);
+    }
+
+    /*
+     * Puerta y brillo utilizan la misma posición inferior.
+     */
+    #scene1 .scene1-light,
+    #scene1 .little-door {
+        bottom: max(
+            15px,
+            calc(env(safe-area-inset-bottom) + 8px)
+        );
+    }
+
+    #scene1 .scene1-light {
+        width: min(34vw, 290px);
+        max-height: 68dvh;
+
+        transform: translate(-50%, 26.8%);
+    }
+
+    #scene1 .little-door {
+        width: clamp(72px, 9.5vw, 100px);
+        max-height: 53dvh;
+
+        transform: translateX(-50%);
+    }
+
+    #scene1 .little-door.open {
+        transform:
+            translateX(-50%)
+            rotateY(-116deg);
+    }
+
+    /*
+     * En horizontal la indicación se coloca en una esquina
+     * para no cubrir la puerta.
+     */
+    #scene1 .door-hint {
+        right: max(
+            12px,
+            calc(env(safe-area-inset-right) + 8px)
+        );
+
+        bottom: max(
+            10px,
+            calc(env(safe-area-inset-bottom) + 5px)
+        );
+
+        left: auto;
+
+        width: min(250px, 34vw);
+
+        font-size: clamp(10px, 1.5vw, 13px);
+        line-height: 1.3;
+        text-align: right;
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 2: TÚNEL
+       ----------------------------------------------------- */
+
+    #scene2 .tunnel-instruction {
+        top: max(
+            8px,
+            calc(env(safe-area-inset-top) + 3px)
+        );
+    }
+
+    #scene2 .tunnel-instruction h2 {
+        font-size: 22px;
+    }
+
+    #scene2 .tunnel-instruction p {
+        font-size: 13px;
+    }
+
+    #scene2 .progress-track {
+        top: 22%;
+        width: min(360px, 55vw);
+    }
+
+    /*
+     * Ya no se utiliza bottom negativo.
+     * Las manos permanecen dentro del viewport.
+     */
+    #scene2 .pov-hand {
+        bottom: max(
+            0px,
+            env(safe-area-inset-bottom)
+        );
+
+        width: min(43vw, 420px);
+        height: auto;
+        max-height: none;
+
+        background-size: contain;
+    }
+
+    #scene2 .pov-hand.left {
+        right: auto;
+        left: 0;
+
+        background-position: left bottom;
+    }
+
+    #scene2 .pov-hand.right {
+        right: 0;
+        left: auto;
+
+        background-position: right bottom;
+    }
+
+    @keyframes pullLeft {
+        0%,
+        100% {
+            transform: rotate(-4deg);
+        }
+
+        40% {
+            transform:
+                translate(12%, -16%)
+                rotate(8deg);
+        }
+    }
+
+    @keyframes pullRight {
+        0%,
+        100% {
+            transform: rotate(4deg);
+        }
+
+        40% {
+            transform:
+                translate(-12%, -16%)
+                rotate(-8deg);
+        }
+    }
+
+    #scene2 .whisper {
+        top: 42%;
+
+        font-size: 20px;
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 3: WEBIE
+       ----------------------------------------------------- */
+
+    #scene3 .scene3-stage {
+        width: max(
+            100vw,
+            calc(100dvh * 16 / 9)
+        );
+
+        height: max(
+            100dvh,
+            calc(100vw * 9 / 16)
+        );
+    }
+
+    #scene3 .dialogue {
+        right: 10px;
+        bottom: 8px;
+        left: auto;
+
+        width: min(55vw, 590px);
+        min-height: 105px;
+        max-height: calc(100dvh - 16px);
+
+        padding: 10px 14px;
+
+        transform: none;
+    }
+
+    #scene3 .dialogue strong {
+        font-size: 14px;
+    }
+
+    #scene3 #dialogueText {
+        min-height: 28px;
+
+        font-size: 16px;
+        line-height: 1.25;
+    }
+
+    #scene3 #dialogueNext {
+        min-height: 34px;
+
+        font-size: 15px;
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 4: MINIJUEGO
+       ----------------------------------------------------- */
+
+    #scene4 .game-hud {
+        top: max(
+            6px,
+            env(safe-area-inset-top)
+        );
+
+        width: min(
+            620px,
+            calc(100% - 20px)
+        );
+
+        padding: 7px 12px;
+    }
+
+    #scene4 .lens {
+        width: 130px;
+        height: 130px;
+    }
+
+    #scene4 .drag-talisman {
+        width: 58px;
+        height: 58px;
+    }
+
+    #scene4 .buttons-layer {
+        -webkit-mask-image:
+            radial-gradient(
+                circle at
+                var(--lens-x, -999px)
+                var(--lens-y, -999px),
+                black 63px,
+                transparent 65px
+            );
+
+        mask-image:
+            radial-gradient(
+                circle at
+                var(--lens-x, -999px)
+                var(--lens-y, -999px),
+                black 63px,
+                transparent 65px
+            );
+    }
+
+    #scene4 .hand-enemy {
+        top: -35%;
+        right: -28%;
+
+        width: max(900px, 175vw);
+        max-width: none;
+
+        transform:
+            translateX(
+                calc(
+                    106%
+                    - var(--danger) * 1.04%
+                )
+            )
+            rotate(-9deg);
+    }
+
+    #scene4 .game-tip {
+        right: auto;
+        bottom: max(
+            6px,
+            env(safe-area-inset-bottom)
+        );
+        left: 50%;
+
+        width: min(80%, 520px);
+
+        font-size: 10px;
+
+        transform: translateX(-50%);
+    }
+
+    /* -----------------------------------------------------
+       ESCENA 5: FINAL
+       ----------------------------------------------------- */
+
+    #scene5 .final-title {
+        top: max(
+            10px,
+            env(safe-area-inset-top)
+        );
+
+        font-size: clamp(18px, 4vw, 28px);
+    }
+
+    #scene5 #wishButton {
+        bottom: max(
+            10px,
+            env(safe-area-inset-bottom)
+        );
+
+        width: auto;
+        min-width: 180px;
+    }
+
+    #scene5 .letter-scroll {
+        padding-top: max(
+            14px,
+            env(safe-area-inset-top)
+        );
+
+        padding-bottom: max(
+            45px,
+            env(safe-area-inset-bottom)
+        );
+    }
+}
+
+/* =========================================================
+   HORIZONTALES MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-height: 400px) and (orientation: landscape) {
+    #scene1 .invitation {
+        top: 8px;
+
+        font-size: clamp(18px, 3.2vw, 25px);
+    }
+
+    #scene1 .scene1-light {
+        width: min(31vw, 245px);
+    }
+
+    #scene1 .little-door {
+        width: clamp(62px, 8vw, 82px);
+    }
+
+    #scene1 .door-hint {
+        width: min(230px, 35vw);
+
+        font-size: 10px;
+    }
+
+    #scene2 .tunnel-instruction h2 {
+        font-size: 19px;
+    }
+
+    #scene2 .tunnel-instruction p {
+        font-size: 11px;
+    }
+
+    #scene2 .progress-track {
+        top: 24%;
+    }
+
+    #scene2 .pov-hand {
+        bottom: 0;
+
+        width: min(39vw, 350px);
+        max-height: none;
+    }
+
+    #scene2 .whisper {
+        top: 44%;
+
+        font-size: 17px;
+    }
+}
+
+/* =========================================================
+   DISPOSITIVOS SIN HOVER
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+    .drag-talisman {
+        cursor: default;
+    }
+
+    .hidden-button.revealed {
+        cursor: default;
+    }
+
+    #dialogueNext {
+        min-width: 140px;
+    }
+
+    /*
+     * Evita efectos hover permanentes en pantallas táctiles.
+     * No se modifica transform para no descentrar botones.
+     */
+    .primary-button:hover,
+    .menu-music-button:hover {
+        box-shadow: inherit;
+    }
+
+    #wishButton:hover {
+        transform: translateX(-50%);
+    }
+}
+
+/* =========================================================
+   REDUCCIÓN DE MOVIMIENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+/* =========================================================
+   EXPERIENCIA OBLIGATORIAMENTE HORIZONTAL
+   ========================================================= */
+
+@media (
+    orientation: landscape
+) and (
+    pointer: coarse
+) {
+    /* ESCENA 1 */
+
+    #scene1 .scene1-light,
+    #scene1 .little-door {
+        left: 50%;
+        bottom: max(
+            14px,
+            calc(env(safe-area-inset-bottom) + 8px)
+        );
+    }
+
+    #scene1 .scene1-light {
+        width: min(34vw, 290px);
+        transform: translate(-50%, 26.8%);
+    }
+
+    #scene1 .little-door {
+        width: clamp(70px, 9vw, 100px);
+        transform: translateX(-50%);
+    }
+
+    #scene1 .little-door.open {
+        transform:
+            translateX(-50%)
+            rotateY(-116deg);
+    }
+
+    /* ESCENA 2 */
+
+    #scene2 .tunnel,
+    #scene2 .tunnel-lastframe {
+        width: 100%;
+        height: 100dvh;
+
+        background-position: center;
+        background-size: cover;
+        background-attachment: scroll;
+    }
+
+    #scene2 .pov-hand {
+        bottom: max(
+            0px,
+            env(safe-area-inset-bottom)
+        );
+
+        width: min(42vw, 420px);
+        height: auto;
+        max-height: none;
+
+        background-size: contain;
+    }
+
+    #scene2 .pov-hand.left {
+        right: auto;
+        left: 0;
+        background-position: left bottom;
+    }
+
+    #scene2 .pov-hand.right {
+        right: 0;
+        left: auto;
+        background-position: right bottom;
+    }
+
+    /* ESCENA 3 */
+
+    #scene3 .dialogue {
+        right: max(
+            10px,
+            env(safe-area-inset-right)
+        );
+
+        bottom: max(
+            8px,
+            env(safe-area-inset-bottom)
+        );
+
+        left: auto;
+
+        width: min(57vw, 620px);
+        max-height: calc(100dvh - 16px);
+
+        transform: none;
+    }
+
+    /* ESCENA 4 */
+
+    #scene4 .game-hud {
+        top: max(
+            6px,
+            env(safe-area-inset-top)
+        );
+
+        width: min(
+            650px,
+            calc(
+                100%
+                - env(safe-area-inset-left)
+                - env(safe-area-inset-right)
+                - 20px
+            )
+        );
+    }
+
+    #scene4 .game-tip {
+        bottom: max(
+            6px,
+            env(safe-area-inset-bottom)
+        );
+    }
+
+    /* ESCENA 5 */
+
+    #scene5 .final-title {
+        top: max(
+            9px,
+            env(safe-area-inset-top)
+        );
+    }
+
+    #scene5 #wishButton {
+        bottom: max(
+            9px,
+            env(safe-area-inset-bottom)
+        );
+    }
+}
+
+/* =========================================================
+   AJUSTES VISUALES DEFINITIVOS
+   Deben permanecer al final de responsive.css
+   ========================================================= */
+
+/* =========================================================
+   ESCENA 1: PUERTA
+   ========================================================= */
+
+/*
+ * Texto principal más grande y más abajo en PC.
+ */
+#scene1 .invitation {
+    top: clamp(45px, 10vh, 105px);
+
+    width: min(92%, 780px);
+
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.28;
+}
+
+/*
+ * Puerta más grande en PC.
+ */
+#scene1 .little-door {
+    left: 50%;
+    bottom: clamp(28px, 7vh, 75px);
+
+    width: clamp(135px, 16vw, 200px);
+
+    transform: translateX(-50%);
+}
+
+#scene1 .little-door.open {
+    transform:
+        translateX(-50%)
+        rotateY(-116deg);
+}
+
+/*
+ * Luz alineada con la puerta y aumentada.
+ */
+#scene1 .scene1-light {
+    left: 50%;
+    bottom: clamp(28px, 7vh, 75px);
+
+    width: clamp(390px, 54vw, 650px);
+
+    transform: translate(-50%, 26.8%);
+}
+
+/*
+ * Texto inferior de la puerta más grande.
+ */
+#scene1 .door-hint {
+    right: 18px;
+    bottom: max(
+        16px,
+        env(safe-area-inset-bottom)
+    );
+    left: 18px;
+
+    width: auto;
+
+    font-size: clamp(16px, 1.8vw, 22px);
+    line-height: 1.35;
+    letter-spacing: 0.12em;
+    text-align: center;
+}
+
+/* =========================================================
+   ESCENA 2: BRAZOS E INSTRUCCIONES
+   ========================================================= */
+
+/*
+ * Texto inferior de la instrucción más grande.
+ */
+#scene2 .tunnel-instruction p {
+    font-size: clamp(17px, 2vw, 23px);
+    line-height: 1.4;
+}
+
+/*
+ * Brazos más grandes en PC.
+ */
+#scene2 .pov-hand {
+    bottom: 0;
+
+    width: min(62vw, 760px);
+    max-width: none;
+    max-height: none;
+
+    aspect-ratio: 16 / 9;
+
+    background-size: contain;
+}
+
+#scene2 .pov-hand.left {
+    right: auto;
+    left: -5%;
+
+    background-position: left bottom;
+}
+
+#scene2 .pov-hand.right {
+    right: -5%;
+    left: auto;
+
+    background-position: right bottom;
+}
+
+/* =========================================================
+   ESCENA 4: TEXTO INFERIOR MÁS GRANDE
+   ========================================================= */
+
+#scene4 .game-tip {
+    right: 16px;
+    bottom: max(
+        12px,
+        env(safe-area-inset-bottom)
+    );
+    left: 16px;
+
+    width: min(760px, calc(100% - 32px));
+    margin-right: auto;
+    margin-left: auto;
+
+    padding: 10px 18px;
+
+    font-size: clamp(15px, 1.7vw, 20px);
+    line-height: 1.4;
+
+    transform: none;
+}
+
+/* =========================================================
+   TELÉFONOS HORIZONTALES
+   ========================================================= */
+
+@media (orientation: landscape) and (pointer: coarse) {
+    /* ---------- Puerta ---------- */
+
+    #scene1 .invitation {
+        top: max(
+            28px,
+            calc(env(safe-area-inset-top) + 18px)
+        );
+
+        width: min(84%, 740px);
+
+        font-size: clamp(28px, 4.2vw, 42px);
+        line-height: 1.25;
+    }
+
+    #scene1 .little-door {
+        bottom: max(
+            18px,
+            calc(env(safe-area-inset-bottom) + 10px)
+        );
+
+        width: clamp(112px, 14vw, 165px);
+        max-height: 57dvh;
+
+        transform: translateX(-50%);
+    }
+
+    #scene1 .little-door.open {
+        transform:
+            translateX(-50%)
+            rotateY(-116deg);
+    }
+
+    #scene1 .scene1-light {
+        bottom: max(
+            18px,
+            calc(env(safe-area-inset-bottom) + 10px)
+        );
+
+        width: min(46vw, 480px);
+        max-height: 78dvh;
+
+        transform: translate(-50%, 26.8%);
+    }
+
+    #scene1 .door-hint {
+        right: max(
+            16px,
+            calc(env(safe-area-inset-right) + 10px)
+        );
+
+        bottom: max(
+            12px,
+            calc(env(safe-area-inset-bottom) + 6px)
+        );
+
+        left: auto;
+
+        width: min(310px, 34vw);
+
+        font-size: clamp(15px, 2vw, 19px);
+        line-height: 1.35;
+        text-align: right;
+    }
+
+    /* ---------- Túnel ---------- */
+
+    #scene2 .tunnel-instruction {
+        top: max(
+            12px,
+            calc(env(safe-area-inset-top) + 6px)
+        );
+    }
+
+    #scene2 .tunnel-instruction h2 {
+        font-size: clamp(27px, 4vw, 38px);
+    }
+
+    #scene2 .tunnel-instruction p {
+        font-size: clamp(16px, 2.2vw, 22px);
+        line-height: 1.35;
+    }
+
+    #scene2 .progress-track {
+        top: clamp(100px, 24vh, 145px);
+
+        width: min(52vw, 520px);
+        height: 10px;
+    }
+
+    /*
+     * Brazos considerablemente más grandes.
+     * Se dejan dentro de la pantalla por abajo.
+     */
+    #scene2 .pov-hand {
+        bottom: max(
+            0px,
+            env(safe-area-inset-bottom)
+        );
+
+        width: min(59vw, 720px);
+        max-width: none;
+        max-height: none;
+
+        background-size: contain;
+    }
+
+    #scene2 .pov-hand.left {
+        right: auto;
+        left: -7%;
+
+        background-position: left bottom;
+    }
+
+    #scene2 .pov-hand.right {
+        right: -7%;
+        left: auto;
+
+        background-position: right bottom;
+    }
+
+    @keyframes pullLeft {
+        0%,
+        100% {
+            transform: rotate(-4deg);
+        }
+
+        40% {
+            transform:
+                translate(15%, -20%)
+                rotate(9deg);
+        }
+    }
+
+    @keyframes pullRight {
+        0%,
+        100% {
+            transform: rotate(4deg);
+        }
+
+        40% {
+            transform:
+                translate(-15%, -20%)
+                rotate(-9deg);
+        }
+    }
+
+    /* ---------- Minijuego ---------- */
+
+    #scene4 .game-tip {
+        right: max(
+            14px,
+            env(safe-area-inset-right)
+        );
+
+        bottom: max(
+            9px,
+            calc(env(safe-area-inset-bottom) + 4px)
+        );
+
+        left: max(
+            14px,
+            env(safe-area-inset-left)
+        );
+
+        width: min(760px, calc(100% - 28px));
+
+        padding: 9px 16px;
+
+        font-size: clamp(14px, 1.8vw, 18px);
+        line-height: 1.35;
+
+        transform: none;
+    }
+}
+
+/* =========================================================
+   TELÉFONOS HORIZONTALES CON POCA ALTURA
+   ========================================================= */
+
+@media (max-height: 520px) and (orientation: landscape) {
+    #scene1 .invitation {
+        top: max(
+            18px,
+            calc(env(safe-area-inset-top) + 9px)
+        );
+
+        font-size: clamp(26px, 3.7vw, 37px);
+    }
+
+    #scene1 .little-door {
+        bottom: max(
+            12px,
+            calc(env(safe-area-inset-bottom) + 5px)
+        );
+
+        width: clamp(105px, 13vw, 145px);
+    }
+
+    #scene1 .scene1-light {
+        bottom: max(
+            12px,
+            calc(env(safe-area-inset-bottom) + 5px)
+        );
+
+        width: min(42vw, 430px);
+    }
+
+    #scene1 .door-hint {
+        font-size: clamp(14px, 1.8vw, 18px);
+    }
+
+    #scene2 .tunnel-instruction h2 {
+        font-size: clamp(25px, 3.5vw, 34px);
+    }
+
+    #scene2 .tunnel-instruction p {
+        font-size: clamp(15px, 2vw, 20px);
+    }
+
+    #scene2 .progress-track {
+        top: clamp(92px, 25vh, 125px);
+    }
+
+    /*
+     * En pantallas bajas siguen siendo grandes,
+     * pero sin quedar totalmente recortados.
+     */
+    #scene2 .pov-hand {
+        bottom: 0;
+
+        width: min(55vw, 620px);
+    }
+
+    #scene2 .pov-hand.left {
+        left: -5%;
+    }
+
+    #scene2 .pov-hand.right {
+        right: -5%;
+    }
+
+    #scene4 .game-tip {
+        padding: 7px 14px;
+
+        font-size: clamp(13px, 1.65vw, 17px);
+    }
+}
+
+/* =========================================================
+   PANTALLAS HORIZONTALES MUY BAJAS
+   ========================================================= */
+
+@media (max-height: 400px) and (orientation: landscape) {
+    #scene1 .invitation {
+        top: max(
+            10px,
+            env(safe-area-inset-top)
+        );
+
+        font-size: clamp(22px, 3vw, 31px);
+    }
+
+    #scene1 .little-door {
+        width: clamp(88px, 11vw, 120px);
+    }
+
+    #scene1 .scene1-light {
+        width: min(37vw, 350px);
+    }
+
+    #scene1 .door-hint {
+        width: min(280px, 36vw);
+
+        font-size: clamp(12px, 1.6vw, 16px);
+    }
+
+    #scene2 .tunnel-instruction h2 {
+        font-size: clamp(21px, 3vw, 28px);
+    }
+
+    #scene2 .tunnel-instruction p {
+        font-size: clamp(13px, 1.7vw, 17px);
+    }
+
+    #scene2 .progress-track {
+        top: 25%;
+    }
+
+    #scene2 .pov-hand {
+        width: min(49vw, 530px);
+    }
+
+    #scene4 .game-tip {
+        font-size: clamp(12px, 1.5vw, 15px);
+    }
+}
