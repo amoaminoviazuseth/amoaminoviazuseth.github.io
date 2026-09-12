@@ -1,43 +1,82 @@
-/* ESCENA 1 */
+/* =========================================================
+   ESCENA 1 — PUERTA
+   ========================================================= */
+
 #scene1 {
-    background:
-        linear-gradient(rgba(2, 2, 8, 0.8), rgba(2, 2, 8, 0.94)),
-        repeating-linear-gradient(90deg,
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+
+    background-color: #020208;
+    background-image:
+        linear-gradient(
+            rgba(2, 2, 8, 0.8),
+            rgba(2, 2, 8, 0.94)
+        ),
+        repeating-linear-gradient(
+            90deg,
             #272233 0 4px,
             #17131f 4px 34px,
             #31283d 34px 37px,
-            #17131f 37px 68px);
-    perspective: 900px;
+            #17131f 37px 68px
+        );
+
+    perspective: 1200px;
 }
+
+
+/* =========================================================
+   TEXTO DE INVITACIÓN
+   ========================================================= */
 
 .invitation {
     position: absolute;
-    top: 12%;
+    top: 10%;
     left: 0;
     right: 0;
+
+    width: min(90%, 1000px);
     margin: 0 auto;
-    width: min(90%, 650px);
+
     color: #f6e9d3;
     text-align: center;
-    font-family: 'vcr', sans-serif;
-    font-size: clamp(22px, 4vw, 38px);
+    font-family: "vcr", sans-serif;
+    font-size: clamp(24px, 3.2vw, 52px);
     font-weight: 400;
+    line-height: 1.45;
     letter-spacing: 0.02em;
-    text-shadow: 0 0 14px #000, 2px 2px #302141;
+
+    text-shadow:
+        0 0 14px #000,
+        2px 2px #302141;
+
     opacity: 0;
-    transition: opacity 1s;
+    visibility: hidden;
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+
+    pointer-events: none;
     z-index: 10;
+
     will-change: transform, opacity;
 }
 
 .invitation.visible {
     opacity: 1;
+    visibility: visible;
     animation: trembleText 0.15s infinite;
 }
 
-/* Temblor sobre transform SIN left/translateX(-50%):
-   el centrado lo garantiza left:0/right:0 + margin auto,
-   así la animación puede usar transform libremente. */
+
+/* =========================================================
+   ANIMACIONES DEL TEXTO
+   ========================================================= */
+
 @keyframes trembleText {
     0% {
         transform: translate(0, 0);
@@ -65,7 +104,6 @@
 }
 
 @keyframes nervousText {
-
     0%,
     100% {
         transform: translateY(0);
@@ -80,81 +118,746 @@
     }
 }
 
+
+/* =========================================================
+   FONDO DE LUZ Y HUECO NEGRO
+   door_glow.webp debe ser la imagen horizontal que contiene
+   el fondo azul y el hueco negro.
+   ========================================================= */
+
 .scene1-light {
     position: absolute;
+    inset: 0;
 
-    width: clamp(320px, 46.8vw, 535px);
-    height: auto;
-    aspect-ratio: 768 / 1024;
+    width: 100%;
+    height: 100%;
 
-    bottom: 13%;
     padding: 0;
+    margin: 0;
     border: 0;
-    transform: translateY(26.8%);
-    transition: 0.85s;
 
-    background: url("../media/img/door_glow.webp") no-repeat center;
-    background-size: contain;
+    background-color: #030614;
+    background-image: url("../media/img/door_glow.webp");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: scroll;
+
     pointer-events: none;
+    user-select: none;
 
-    -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 100%);
-    mask-image: radial-gradient(ellipse at center, black 10%, transparent 100%);
+    transform: none;
+    opacity: 1;
+
+    z-index: 1;
+
+    /*
+     * No usar aspect-ratio aquí.
+     * No usar background-size: contain.
+     * El fondo debe ocupar toda la escena.
+     */
+    -webkit-mask-image: none;
+    mask-image: none;
 }
+
+
+/* =========================================================
+   PUERTA
+   door_texture.jpg debe contener solamente la puerta.
+   ========================================================= */
 
 .little-door {
     position: absolute;
+    left: 50%;
     bottom: 13%;
 
-    width: clamp(90px, 13vw, 150px);
+    /*
+     * El tamaño se adapta tanto al ancho como a la altura.
+     * El límite máximo evita que sea demasiado grande.
+     */
+    width: clamp(
+        145px,
+        max(13.94vw, 35.66vh),
+        340px
+    );
+
     height: auto;
     aspect-ratio: 213 / 360;
 
     padding: 0;
+    margin: 0;
     border: 0;
-    background: url("../media/img/door_texture.jpg") no-repeat center;
-    background-size: contain;
-    cursor: pointer;
-    transition: 0.85s;
-    transform-origin: left;
-    transform-style: preserve-3d;
+    border-radius: 0;
 
-    filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.65));
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-color: transparent;
+    background-image: url("../media/img/door_texture.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+
+    cursor: pointer;
+    user-select: none;
+
+    z-index: 3;
+
+    transform:
+        translateX(-50%)
+        rotateY(0deg);
+
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+
+    transition:
+        transform 850ms cubic-bezier(0.22, 0.75, 0.25, 1),
+        filter 850ms ease;
+
+    filter:
+        drop-shadow(0 20px 20px rgba(0, 0, 0, 0.65));
+
+    will-change: transform, filter;
 }
 
+.little-door:hover {
+    filter:
+        brightness(1.04)
+        drop-shadow(0 20px 24px rgba(0, 0, 0, 0.72));
+}
+
+.little-door:focus-visible {
+    outline: 2px solid rgba(255, 229, 173, 0.9);
+    outline-offset: 5px;
+}
 
 .little-door.open {
-    transform: rotateY(-116deg);
+    /*
+     * Es importante conservar translateX(-50%).
+     * Si se elimina, la puerta salta hacia la derecha.
+     */
+    transform:
+        translateX(-50%)
+        rotateY(-116deg);
+
+    filter:
+        drop-shadow(22px 20px 18px rgba(0, 0, 0, 0.75));
 }
+
+
+/* =========================================================
+   INDICACIÓN DE CLIC
+   ========================================================= */
 
 .door-hint {
     position: absolute;
-    bottom: 5%;
-    color: #a99ab8;
-    font-size: 14px;
+    left: 50%;
+    bottom: 3%;
+
+    width: max-content;
+    max-width: 90%;
+
+    margin: 0;
+
+    color: #c2afca;
+    font-family: "vcr", sans-serif;
+    font-size: clamp(14px, 1.4vw, 24px);
+    line-height: 1.2;
     letter-spacing: 0.14em;
+    text-align: center;
     text-transform: uppercase;
+
     opacity: 0;
-    transition: opacity 600ms;
+    visibility: hidden;
+
+    transform: translateX(-50%);
+
+    transition:
+        opacity 600ms ease,
+        visibility 600ms ease;
+
+    pointer-events: none;
+    z-index: 10;
 }
 
 .door-hint.visible {
     opacity: 1;
+    visibility: visible;
 }
+
+
+/* =========================================================
+   HUELLAS DEL RATÓN
+   ========================================================= */
 
 .mouse-tracks {
     position: absolute;
     top: 67%;
     left: -10%;
+
     display: flex;
+    align-items: center;
     gap: 27px;
+
     color: rgba(240, 225, 201, 0.6);
     font-size: 16px;
+
     opacity: 0;
     pointer-events: none;
+    user-select: none;
+
+    z-index: 5;
 }
 
 .mouse-tracks.walking {
     animation: mouseRun 2.5s linear forwards;
+}
+
+.mouse-tracks span:nth-child(odd) {
+    transform: translateY(0) rotate(-20deg);
+}
+
+.mouse-tracks span:nth-child(even) {
+    transform: translateY(10px) rotate(30deg);
+}
+
+@keyframes mouseRun {
+    0% {
+        left: -10%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 108%;
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   PANTALLAS PEQUEÑAS
+   ========================================================= */
+
+@media (max-width: 700px) {
+    .invitation {
+        top: 8%;
+        width: 92%;
+        font-size: clamp(22px, 7vw, 34px);
+        line-height: 1.35;
+    }
+
+    .scene1-light {
+        /*
+         * El fondo sigue cubriendo la pantalla.
+         * Se mantiene centrado en el hueco y la puerta.
+         */
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .little-door {
+        bottom: 14%;
+
+        width: clamp(
+            140px,
+            max(34vw, 27vh),
+            270px
+        );
+    }
+
+    .door-hint {
+        bottom: 4%;
+        width: 90%;
+        font-size: clamp(13px, 3.8vw, 18px);
+        white-space: normal;
+    }
+
+    .mouse-tracks {
+        top: 72%;
+        gap: 18px;
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   PANTALLAS BAJAS / ORIENTACIÓN HORIZONTAL
+   ========================================================= */
+
+@media (max-height: 650px) and (orientation: landscape) {
+    .invitation {
+        top: 5%;
+        font-size: clamp(20px, 3vw, 36px);
+        line-height: 1.25;
+    }
+
+    .little-door {
+        bottom: 10%;
+        width: clamp(125px, 32vh, 250px);
+    }
+
+    .door-hint {
+        bottom: 2%;
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   ACCESIBILIDAD: REDUCIR MOVIMIENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .invitation,
+    .little-door,
+    .door-hint {
+        transition-duration: 1ms;
+    }
+
+    .invitation.visible {
+        animation: none;
+    }
+
+    .mouse-tracks.walking {
+        animation-duration: 1ms;
+    }
+}
+
+/* =========================================================
+   FIX: FULL-SCREEN SCENE 1 BACKGROUND
+   Add this at the END of the CSS file.
+   ========================================================= */
+
+#scene1 {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+
+    /*
+     * Keep only the dark wall texture here.
+     */
+    background-color: #020208;
+    background-image:
+        linear-gradient(
+            rgba(2, 2, 8, 0.8),
+            rgba(2, 2, 8, 0.94)
+        ),
+        repeating-linear-gradient(
+            90deg,
+            #272233 0 4px,
+            #17131f 4px 34px,
+            #31283d 34px 37px,
+            #17131f 37px 68px
+        );
+
+    perspective: 1200px;
+}
+
+/*
+ * The background is now attached directly to #scene1.
+ * Therefore, it cannot inherit the small width of another container.
+ */
+#scene1::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    background-image: url("../media/img/door_glow.webp");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+/*
+ * Remove the image from the old element.
+ * Do not use display:none because the element could contain
+ * other elements in your HTML.
+ */
+.scene1-light {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    min-height: 0;
+
+    padding: 0;
+    margin: 0;
+    border: 0;
+
+    background: none !important;
+
+    transform: none;
+    pointer-events: none;
+    z-index: 2;
+
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+/*
+ * Keep the interactive elements above the background.
+ */
+.little-door {
+    z-index: 4;
+    pointer-events: auto;
+}
+
+.invitation,
+.door-hint {
+    z-index: 10;
+}
+
+.mouse-tracks {
+    z-index: 6;
+}
+
+/* =========================================================
+   FINAL ALIGNMENT FIX
+   Based on door_glow.webp dimensions: 1320 × 606
+   ========================================================= */
+
+#scene1 {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    min-height: 100vh;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+
+/* Full-screen painted background */
+#scene1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-image: url("../media/img/door_glow.webp");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+/*
+ * Prevent the old .scene1-light element from creating
+ * another resized copy of the image.
+ */
+.scene1-light {
+    position: absolute !important;
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+
+    background: none !important;
+
+    transform: none !important;
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   INVITATION
+   Change --invitation-top to move the text.
+   ========================================================= */
+
+.invitation {
+    --invitation-top: 6%;
+
+    position: absolute !important;
+    top: var(--invitation-top) !important;
+    left: 50% !important;
+    right: auto !important;
+
+    width: min(92%, 1000px) !important;
+    margin: 0 !important;
+
+    color: #f6e9d3;
+    text-align: center;
+
+    font-family: "vcr", sans-serif;
+    font-size: clamp(24px, 3.2vw, 52px);
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+
+    text-shadow:
+        0 0 14px #000,
+        2px 2px #302141;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(-50%);
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+
+    pointer-events: none;
+    z-index: 10;
+}
+
+.invitation.visible {
+    opacity: 1;
+    visibility: visible;
+
+    /*
+     * This animation includes translateX(-50%), preventing
+     * the invitation from moving away from the center.
+     */
+    animation: trembleCenteredText 0.15s infinite;
+}
+
+@keyframes trembleCenteredText {
+    0% {
+        transform: translateX(-50%) translate(0, 0);
+    }
+
+    20% {
+        transform: translateX(-50%) translate(-2px, 1px);
+    }
+
+    40% {
+        transform: translateX(-50%) translate(2px, -1px);
+    }
+
+    60% {
+        transform: translateX(-50%) translate(-1px, -2px);
+    }
+
+    80% {
+        transform: translateX(-50%) translate(1px, 2px);
+    }
+
+    100% {
+        transform: translateX(-50%) translate(0, 0);
+    }
+}
+
+
+/* =========================================================
+   DOOR ALIGNMENT
+   The door is sized from the original background proportions.
+   ========================================================= */
+
+.little-door {
+    position: absolute !important;
+
+    /*
+     * The black hole is centered in the source image.
+     */
+    left: 50% !important;
+    right: auto !important;
+
+    /*
+     * The top of the black hole is approximately 25.25%
+     * from the top of door_glow.webp.
+     */
+    top: 25.25% !important;
+    bottom: auto !important;
+
+    /*
+     * The hole is approximately 230px wide in a 1320px image.
+     *
+     * 230 / 1320 = 17.42vw
+     * 230 / 606  = 37.95vh
+     *
+     * max() follows the same scaling behavior as
+     * background-size: cover.
+     */
+    width: max(17.42vw, 37.95vh) !important;
+    height: auto !important;
+    aspect-ratio: 213 / 360;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-color: transparent;
+    background-image: url("../media/img/door_texture.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+
+    cursor: pointer;
+    pointer-events: auto;
+    user-select: none;
+
+    transform:
+        translateX(-50%)
+        rotateY(0deg) !important;
+
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+
+    transition:
+        transform 850ms cubic-bezier(0.22, 0.75, 0.25, 1),
+        filter 850ms ease;
+
+    filter:
+        drop-shadow(0 20px 20px rgba(0, 0, 0, 0.65));
+
+    will-change: transform, filter;
+    z-index: 4;
+}
+
+.little-door:hover {
+    filter:
+        brightness(1.04)
+        drop-shadow(0 20px 24px rgba(0, 0, 0, 0.72));
+}
+
+.little-door:focus-visible {
+    outline: 2px solid rgba(255, 229, 173, 0.9);
+    outline-offset: 5px;
+}
+
+.little-door.open {
+    transform:
+        translateX(-50%)
+        rotateY(-116deg) !important;
+
+    filter:
+        drop-shadow(22px 20px 18px rgba(0, 0, 0, 0.75));
+}
+
+
+/* =========================================================
+   VERY WIDE SCREENS
+   Correct the vertical position when background-size: cover
+   scales the image based on screen width.
+   ========================================================= */
+
+@media (min-aspect-ratio: 220 / 101) {
+    .little-door {
+        /*
+         * Compensates for vertical cropping caused by cover.
+         */
+        top: calc(50% - 11.36vw) !important;
+    }
+}
+
+
+/* =========================================================
+   CLICK INSTRUCTION
+   Fixes the text appearing cut off on the left.
+   ========================================================= */
+
+.door-hint {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 3% !important;
+
+    display: block;
+    width: max-content !important;
+    max-width: 92%;
+
+    margin: 0 !important;
+
+    color: #c2afca;
+    font-family: "vcr", sans-serif;
+    font-size: clamp(14px, 1.4vw, 24px);
+    line-height: 1.2;
+    letter-spacing: 0.14em;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(-50%) !important;
+
+    transition:
+        opacity 600ms ease,
+        visibility 600ms ease;
+
+    pointer-events: none;
+    z-index: 10;
+}
+
+.door-hint.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =========================================================
+   MOUSE TRACKS
+   ========================================================= */
+
+.mouse-tracks {
+    position: absolute;
+    top: 67%;
+    left: -10%;
+
+    display: flex;
+    align-items: center;
+    gap: 27px;
+
+    color: rgba(240, 225, 201, 0.6);
+    font-size: 16px;
+
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    z-index: 6;
+}
+
+.mouse-tracks.walking {
+    animation: mouseRun 2.5s linear forwards;
+}
+
+.mouse-tracks span:nth-child(odd) {
+    transform: translateY(0) rotate(-20deg);
 }
 
 .mouse-tracks span:nth-child(even) {
@@ -176,4 +879,86 @@
         left: 108%;
         opacity: 0;
     }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+    .invitation {
+        --invitation-top: 7%;
+
+        width: 92% !important;
+        font-size: clamp(21px, 6.5vw, 34px);
+        line-height: 1.3;
+    }
+
+    .door-hint {
+        bottom: 4% !important;
+        width: 90% !important;
+
+        font-size: clamp(12px, 3.7vw, 17px);
+        white-space: normal;
+    }
+
+    .mouse-tracks {
+        top: 72%;
+        gap: 18px;
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   SHORT LANDSCAPE SCREENS
+   ========================================================= */
+
+@media (max-height: 650px) and (orientation: landscape) {
+    .invitation {
+        --invitation-top: 5%;
+
+        font-size: clamp(20px, 3vw, 38px);
+        line-height: 1.25;
+    }
+
+    .door-hint {
+        bottom: 2% !important;
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .invitation,
+    .little-door,
+    .door-hint {
+        transition-duration: 1ms;
+    }
+
+    .invitation.visible {
+        animation: none;
+        transform: translateX(-50%);
+    }
+
+    .mouse-tracks.walking {
+        animation-duration: 1ms;
+    }
+}
+
+/* Small final alignment adjustments */
+.invitation {
+    /* Increase to move down; decrease to move up */
+    --invitation-top: 7%;
+}
+
+.little-door {
+    /* Slightly left and upward to match the black opening */
+    left: calc(50% - 3px) !important;
+    top: calc(25.25% - 15px) !important;
 }

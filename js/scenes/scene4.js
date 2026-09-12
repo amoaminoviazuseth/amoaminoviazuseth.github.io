@@ -58,6 +58,44 @@ function startMinigameMusic() {
     }
 }
 
+function playWitchLaugh() {
+    const laugh = elements.witchLaugh;
+
+    if (!laugh) {
+        console.warn(
+            "No se encontró el audio #witchLaugh."
+        );
+        return;
+    }
+
+    laugh.pause();
+    laugh.currentTime = 0;
+    laugh.volume = 0.85;
+
+    const playPromise = laugh.play();
+
+    if (playPromise) {
+        playPromise.catch((error) => {
+            console.warn(
+                "No se pudo reproducir la risa de la bruja:",
+                error
+            );
+        });
+    }
+}
+
+function stopWitchLaugh(reset = true) {
+    const laugh = elements.witchLaugh;
+
+    if (!laugh) return;
+
+    laugh.pause();
+
+    if (reset) {
+        laugh.currentTime = 0;
+    }
+}
+
 let gamePausedByOrientation = false;
 
 
@@ -316,6 +354,7 @@ function scheduleDangerTick() {
 export function startButtonGame() {
     window.clearTimeout(dangerTimeout);
     cancelAllSoulHolds();
+    stopWitchLaugh();
 
     collected = 0;
     danger = 7;
@@ -356,10 +395,17 @@ function loseGame() {
     cancelAllSoulHolds();
     stopMinigameMusic();
 
+    /*
+     * Display the death screen first.
+     */
+    elements.gameOver.classList.remove("hidden");
+
+    /*
+     * Death effects and witch laugh.
+     */
     noise(1, 0.18, 450);
     tone(53, 1.3, "sawtooth", 0.08);
-
-    elements.gameOver.classList.remove("hidden");
+    playWitchLaugh();
 }
 
 function winButtonGame() {

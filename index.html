@@ -23,22 +23,17 @@
   <title>Una puerta para ti</title>
   <link rel="preload" href="./media/img/tunnel_last_anim.webp" as="image" type="image/webp">
 
-  <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="black-translucent"
-  >
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <meta name="theme-color" content="#000000">
 
   <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/x-icon" href="/media/icons/icon-512.png">
 </head>
 
 <body>
@@ -205,8 +200,11 @@
 
   <!-- ESCENA 4 -->
   <section id="scene4" class="scene">
-    <audio id="minigameMusic" src="./media/sounds/minigame.mp3" preload="auto" loop></audio>
+    <audio id="minigameMusic" src="./media/sounds/minigame.mp3" preload="auto" loop>
+    </audio>
 
+    <audio id="witchLaugh" src="./media/sounds/brujaLaugh.mp3" preload="auto">
+    </audio>
     <div class="room">
       <div class="buttons-layer">
         <button id="buttonPainting" class="hidden-button soul0" aria-label="Botón oculto">

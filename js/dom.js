@@ -161,7 +161,13 @@ export const elements = {
     get whiteFlash() {
         return document.querySelector("#whiteFlash");
     },
+    get minigameMusic() {
+        return document.querySelector("#minigameMusic");
+    },
 
+    get witchLaugh() {
+        return document.querySelector("#witchLaugh");
+    },
     get fireflyContainer() {
         return document.querySelector("#fireflies");
     }
